@@ -88,6 +88,7 @@
       <AplClassesDll Include="AplClasses.dll" />
       <AplClassesDllFrom Include="$(ProjectDir)aplbuild\AplClasses.dll" />
       <AplClassesDllTo Include="$(ProjectDir)$(OutputPath)AplClasses.dll" />
+      
       <DllOut Include="$(ProjectDir)$(OutputPath)" />
     </ItemGroup>
     <Message Text="Remove folder '@(AplBuildFolder)' ." Importance="high" />
@@ -103,18 +104,22 @@
   
     <Message Text="Copy files from '@(AplDllReferences)' to '@(AplBuildFolder)' ." Importance="high" />
     <Copy SourceFiles="@(AplDllReferences)" DestinationFolder="@(AplBuildFolder)" />
-    <Message Text="APL compile:  @(AplBuildFolder)@(DyalogCompiler) /v /t:library /o:@(AplBaseDll) @(AplBaseFile) " Importance="high" />
-    <Exec Command="@(DyalogCompiler) /v /t:library /o:@(AplBaseDll) @(AplBaseFile)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
+    
+    <Message Text="APL compile:  @(AplBuildFolder)@(DyalogCompiler) /v /multihost /t:library /o:@(AplBaseDll) @(AplBaseFile) " Importance="high" />
+    <Exec Command="@(DyalogCompiler) /v /multihost /t:library /o:@(AplBaseDll) @(AplBaseFile)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
     <Copy SourceFiles="@(AplBaseDllFrom)" DestinationFolder="@(DllOut)" />
     <Error Condition="!Exists(@(AplBaseDllTo))" Text="APL code is not build to @(AplBaseDllTo) !" />
-    <Message Text="APL compile:  @(AplBuildFolder)@(DyalogCompiler) /v /t:library /o:@(AplBase1Dll) @(AplBase1File) " Importance="high" />
-    <Exec Command="@(DyalogCompiler) /v /t:library /o:@(AplBase1Dll) @(AplBase1File)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
+    
+    <Message Text="APL compile:  @(AplBuildFolder)@(DyalogCompiler) /v /multihost /t:library /o:@(AplBase1Dll) @(AplBase1File) " Importance="high" />
+    <Exec Command="@(DyalogCompiler) /v /multihost /t:library /o:@(AplBase1Dll) @(AplBase1File)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
     <Copy SourceFiles="@(AplBase1DllFrom)" DestinationFolder="@(DllOut)" />
     <Error Condition="!Exists(@(AplBase1DllTo))" Text="APL code is not build to @(AplBase1DllTo) !" />
+    
     <Message Text="Copy files from '@(AplClassesFiles)' to '@(AplBuildFolder)' ." Importance="high" />
     <Copy SourceFiles="@(AplClassesFiles)" DestinationFolder="@(AplBuildFolder)" />
-    <Message Text="APL compile: @(DyalogCompiler) /v /t:library /o:@(AplClassesDll) @(AplClassesFile) " Importance="high" />
-    <Exec Command="@(DyalogCompiler) /v /t:library /o:@(AplClassesDll) @(AplClassesFile)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
+    <Message Text="APL compile: @(DyalogCompiler) /v /multihost /t:library /o:@(AplClassesDll) @(AplClassesFile) " Importance="high" />
+    <Exec Command="@(DyalogCompiler) /v /multihost /t:library /o:@(AplClassesDll) @(AplClassesFile)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
+    
     <Copy SourceFiles="@(AplClassesDllFrom)" DestinationFolder="@(DllOut)" />
     <Error Condition="!Exists('@(AplClassesDllTo)')" Text="APL code is not build to @(AplClassesDllTo) !" />
   </Target>
