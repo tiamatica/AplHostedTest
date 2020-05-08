@@ -37,9 +37,13 @@
     <AplBaseDll>AplBase.dll</AplBaseDll>
     <AplBase1Dll>AplBase1.dll</AplBase1Dll>
     <AplClassesDll>AplClasses.dll</AplClassesDll>
+    <AplGroup001_dll>AplGroup001.dll</AplGroup001_dll>
+    <AplGroup002_dll>AplGroup002.dll</AplGroup002_dll>
+    <AplGroup003_dll>AplGroup003.dll</AplGroup003_dll>
     <AplDllReferences>$(SolutionDir)/DotNetClasses/$(OutputPath)DotNetClasses.dll</AplDllReferences>
     <DyalogCompiler>dyalogc64_unicode.exe</DyalogCompiler>
     <AplBuildFolder>$(ProjectDir)aplbuild\</AplBuildFolder>
+    <DyalogCompileCmd>$(DyalogCompiler) /v /multihost /t:library</DyalogCompileCmd>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="bridge180-64_unicode">
@@ -73,9 +77,11 @@
       <AplBaseFiles Include="AplBaseClasses.apln" />
       <AplBase1Files Include="AplBaseClasses1.apln" />
       <AplClassesFiles Include="SimpleAplSample.apln;AplClasses.apln" />
+      <AplGroup001_Files Include="AplGroup001.apln" />
+      <AplGroup002_Files Include="AplGroup002.apln" />
+      <AplGroup003_Files Include="AplGroup003.apln" />
       <AplDlls Include="$(AplBuildFolder)Apl*.dll" />
       <DyalogFiles Include="$(SolutionDir)/DyalogBin/*.*" />
-      <DyalogCompiler Include="dyalogc64_unicode.exe" />
     </ItemGroup>
     <Message Text="Remove folder '$(AplBuildFolder)' ." Importance="high" />
     <RemoveDir Directories="$(AplBuildFolder)" />
@@ -85,16 +91,25 @@
     <Copy SourceFiles="@(AplCodeFile)" DestinationFolder="$(AplBuildFolder)" />
     <Message Text="Copy files from '$(AplDllReferences)' to '$(AplBuildFolder)' ." Importance="high" />
     <Copy SourceFiles="$(AplDllReferences)" DestinationFolder="$(AplBuildFolder)" />
-    <Message Text="APL compile:  $(AplBuildFolder)$(DyalogCompiler) /v /multihost /t:library /o:$(AplBaseDll) @(AplBaseFiles) " Importance="high" />
-    <Exec Command="$(DyalogCompiler) /v /multihost /t:library /o:$(AplBaseDll) @(AplBaseFiles)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
-    <Message Text="APL compile:  $(AplBuildFolder)$(DyalogCompiler) /v /multihost /t:library /o:$(AplBase1Dll) @(AplBase1Files) " Importance="high" />
-    <Exec Command="$(DyalogCompiler) /v /multihost /t:library /o:$(AplBase1Dll) @(AplBase1Files)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
-    <Message Text="APL compile: $(DyalogCompiler) /v /multihost /t:library /o:$(AplClassesDll) @(AplClassesFiles) " Importance="high" />
-    <Exec Command="$(DyalogCompiler) /v /multihost /t:library /o:$(AplClassesDll) @(AplClassesFiles)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
+    <Message Text="APL compile: @(AplBaseFiles)" Importance="high" />
+    <Exec Command="$(DyalogCompileCmd) /o:$(AplBaseDll) @(AplBaseFiles)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
+    <Message Text="APL compile: @(AplBase1Files) " Importance="high" />
+    <Exec Command="$(DyalogCompileCmd) /o:$(AplBase1Dll) @(AplBase1Files)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
+    <Message Text="APL compile: @(AplClassesFiles) " Importance="high" />
+    <Exec Command="$(DyalogCompileCmd) /o:$(AplClassesDll) @(AplClassesFiles)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
+    <Message Text="APL compile: @(AplGroup001_Files) " Importance="high" />
+    <Exec Command="$(DyalogCompileCmd) /o:$(AplGroup001_dll) @(AplGroup001_Files)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
+    <Message Text="APL compile: @(AplGroup002_Files) " Importance="high" />
+    <Exec Command="$(DyalogCompileCmd) /o:$(AplGroup002_dll) @(AplGroup002_Files)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
+    <Message Text="APL compile: @(AplGroup003_Files) " Importance="high" />
+    <Exec Command="$(DyalogCompileCmd) /o:$(AplGroup003_dll) @(AplGroup003_Files)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
     <Copy SourceFiles="@(AplDlls)" DestinationFolder="$(DllOut)" />
     <Error Condition="!Exists('$(DllOut)$(AplBaseDll)')" Text="APL code is not built to $(AplBaseDll)!" />
     <Error Condition="!Exists('$(DllOut)$(AplBase1Dll)')" Text="APL code is not built to $(AplBase1Dll)!" />
     <Error Condition="!Exists('$(DllOut)$(AplClassesDll)')" Text="APL code is not built to $(AplClassesDll)!" />
+    <Error Condition="!Exists('$(DllOut)$(AplGroup001_dll)')" Text="APL code is not built to $(AplGroup001_dll)!" />
+    <Error Condition="!Exists('$(DllOut)$(AplGroup002_dll)')" Text="APL code is not built to $(AplGroup002_dll)!" />
+    <Error Condition="!Exists('$(DllOut)$(AplGroup003_dll)')" Text="APL code is not built to $(AplGroup003_dll)!" />
   </Target>
   <Target Name="AfterBuild">
   </Target>

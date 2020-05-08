@@ -1,0 +1,21 @@
+﻿:Namespace AplGroup002
+
+    :Class A1
+    :Using System
+   
+        ∇ Make arg
+          :Access Public
+          :Implements Constructor
+          :Signature A1 Int32 arg                                    
+          #.ID←arg
+        ∇
+
+        ∇ r←ID
+          :Access Public
+          :Signature Int32←ID
+          r←#.ID
+        ∇
+
+    :EndClass
+
+:EndNamespace ⍝ AplGroup002

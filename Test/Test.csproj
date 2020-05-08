@@ -47,6 +47,15 @@
     <Reference Include="AplClasses">
       <HintPath>..\AplOOP\bin\Debug\AplClasses.dll</HintPath>
     </Reference>
+    <Reference Include="AplGroup001">
+      <HintPath>..\AplOOP\bin\Debug\AplGroup001.dll</HintPath>
+    </Reference>
+    <Reference Include="AplGroup002">
+      <HintPath>..\AplOOP\bin\Debug\AplGroup002.dll</HintPath>
+    </Reference>
+    <Reference Include="AplGroup003">
+      <HintPath>..\AplOOP\bin\Debug\AplGroup003.dll</HintPath>
+    </Reference>
     <Reference Include="bridge180-64_unicode">
       <HintPath>..\DyalogBin\bridge180-64_unicode.dll</HintPath>
     </Reference>
@@ -73,6 +82,7 @@
     <Compile Include="SimpleAplClassTests.cs" />
     <Compile Include="AplClassesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestGroup001.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AplOOP\AplOOP.csproj">

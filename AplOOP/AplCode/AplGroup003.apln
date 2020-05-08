@@ -1,0 +1,55 @@
+﻿:Namespace AplGroup003
+
+    :Class B1 : AplGroup002.A1
+    :Using System
+    :Using ,.\TestClassA.dll
+
+        ∇ Make arg
+          :Access Public
+          :Implements Constructor
+          :Signature B1 Int32 arg
+          #.ID←arg
+        ∇
+
+        ∇ r←ID
+          :Access Public
+          :Signature Int32←ID
+          r←#.ID
+        ∇
+
+    :EndClass
+
+    :Class B2 : AplGroup002.A1
+    :Using System
+    :Using ,.\TestClassA.dll
+
+        :Field Private b1
+
+        ∇ Make arg
+          :Access Public
+          :Implements Constructor
+          :Signature B2 Int32 arg
+          #.ID←arg
+        ∇
+
+        ∇ Init
+          :Access Public
+          :Signature Init
+          c1←⎕NEW AplGroup003.B1 (1+ID)
+        ∇
+
+        ∇ r←C1PID
+          :Access Public
+          :Signature Int32←C1PID
+          r←c1.ID
+        ∇
+
+        ∇ r←C2PID
+          :Access Public
+          :Signature Int32←C2PID
+          r←#.ID
+        ∇
+
+    :EndClass
+
+:EndNamespace ⍝ AplGroup002
