@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B8AD8B3-ACAB-426E-8066-286B432D69A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AplClasses</RootNamespace>
+    <AssemblyName>AplOOP</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="bridge171-64_unicode">
+      <HintPath>..\..\DyalogBin\bridge171-64_unicode.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AplCode\AplBase1.dyalog" />
+    <None Include="AplCode\SimpleAplClass.dyalog" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AplCode\AplBase.dyalog" />
+    <None Include="AplCode\AplClasses.dyalog" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetClasses\DotNetClasses.csproj">
+      <Project>{2d21f2f5-7c8b-457d-bf4a-39ab4a96db4a}</Project>
+      <Name>DotNetClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  -->
+  <Target Name="BeforeBuild">
+    <ItemGroup>
+      <AplDllReferences Include="$(SolutionDir)/DotNetClasses/$(OutputPath)DotNetClasses.dll" />
+      <DyalogFiles Include="$(SolutionDir)/DyalogBin/*.*" />
+      <DyalogCompiler Include="dyalogc64_unicode.exe" />
+      <AplBuildFolder Include="$(ProjectDir)aplbuild\" />
+
+      <AplBaseFile Include="AplBase.dyalog" />
+      <AplBaseFiles Include="$(ProjectDir)AplCode\AplBase.dyalog" />
+      <AplBaseDll Include="AplBase.dll" />
+      <AplBaseDllFrom Include="$(ProjectDir)aplbuild\AplBase.dll" />
+      <AplBaseDllTo Include="$(ProjectDir)$(OutputPath)AplBase.dll" />
+
+      <AplBase1File Include="AplBase1.dyalog" />
+      <AplBase1Files Include="$(ProjectDir)AplCode\AplBase1.dyalog" />
+      <AplBase1Dll Include="AplBase1.dll" />
+      <AplBase1DllFrom Include="$(ProjectDir)aplbuild\AplBase1.dll" />
+      <AplBase1DllTo Include="$(ProjectDir)$(OutputPath)AplBase1.dll" />
+
+      <AplClassesFile Include="SimpleAplClass.dyalog AplClasses.dyalog" />
+      <AplClassesFiles Include="$(ProjectDir)AplCode\*AplClass*.dyalog" />
+      <AplClassesDll Include="AplClasses.dll" />
+      <AplClassesDllFrom Include="$(ProjectDir)aplbuild\AplClasses.dll" />
+      <AplClassesDllTo Include="$(ProjectDir)$(OutputPath)AplClasses.dll" />
+      <DllOut Include="$(ProjectDir)$(OutputPath)" />
+    </ItemGroup>
+    <Message Text="Remove folder '@(AplBuildFolder)' ." Importance="high" />
+    <RemoveDir Directories="@(AplBuildFolder)" />
+    <Message Text="Copy files from '@(DyalogFiles)' to '@(AplBuildFolder)' ." Importance="high" />
+    <Copy SourceFiles="@(DyalogFiles)" DestinationFolder="@(AplBuildFolder)" />
+  
+    <Message Text="Copy files from '@(AplBaseFiles)' to '@(AplBuildFolder)' ." Importance="high" />
+    <Copy SourceFiles="@(AplBaseFiles)" DestinationFolder="@(AplBuildFolder)" />
+   
+    <Message Text="Copy files from '@(AplBase1Files)' to '@(AplBuildFolder)' ." Importance="high" />
+    <Copy SourceFiles="@(AplBase1Files)" DestinationFolder="@(AplBuildFolder)" />
+  
+    <Message Text="Copy files from '@(AplDllReferences)' to '@(AplBuildFolder)' ." Importance="high" />
+    <Copy SourceFiles="@(AplDllReferences)" DestinationFolder="@(AplBuildFolder)" />
+    <Message Text="APL compile:  @(AplBuildFolder)@(DyalogCompiler) /v /t:library /o:@(AplBaseDll) @(AplBaseFile) " Importance="high" />
+    <Exec Command="@(DyalogCompiler) /v /t:library /o:@(AplBaseDll) @(AplBaseFile)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
+    <Copy SourceFiles="@(AplBaseDllFrom)" DestinationFolder="@(DllOut)" />
+    <Error Condition="!Exists(@(AplBaseDllTo))" Text="APL code is not build to @(AplBaseDllTo) !" />
+    <Message Text="APL compile:  @(AplBuildFolder)@(DyalogCompiler) /v /t:library /o:@(AplBase1Dll) @(AplBase1File) " Importance="high" />
+    <Exec Command="@(DyalogCompiler) /v /t:library /o:@(AplBase1Dll) @(AplBase1File)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
+    <Copy SourceFiles="@(AplBase1DllFrom)" DestinationFolder="@(DllOut)" />
+    <Error Condition="!Exists(@(AplBase1DllTo))" Text="APL code is not build to @(AplBase1DllTo) !" />
+    <Message Text="Copy files from '@(AplClassesFiles)' to '@(AplBuildFolder)' ." Importance="high" />
+    <Copy SourceFiles="@(AplClassesFiles)" DestinationFolder="@(AplBuildFolder)" />
+    <Message Text="APL compile: @(DyalogCompiler) /v /t:library /o:@(AplClassesDll) @(AplClassesFile) " Importance="high" />
+    <Exec Command="@(DyalogCompiler) /v /t:library /o:@(AplClassesDll) @(AplClassesFile)" WorkingDirectory="@(AplBuildFolder)" IgnoreExitCode="true" />
+    <Copy SourceFiles="@(AplClassesDllFrom)" DestinationFolder="@(DllOut)" />
+    <Error Condition="!Exists('@(AplClassesDllTo)')" Text="APL code is not build to @(AplClassesDllTo) !" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

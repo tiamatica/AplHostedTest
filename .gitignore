@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+.vs
+AplOOP/aplbuild
+AplOOP/bin
+AplOOP/obj
+AplResourceTestApp/bin
+AplResourceTestApp/obj
+DotNetClasses/bin
+DotNetClasses/obj
+MultiInstanceNet/bin
+MultiInstanceNet/obj
+Test/bin
+Test/obj
+packages
+DyalogBin
