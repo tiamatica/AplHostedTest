@@ -35,18 +35,19 @@
     :EndClass
 
     :Class ClassWithDispose : AplBase, IDisposable
+    :Using System
         :Field Private Instance vBigVar
 
         ∇ Make
           :Implements Constructor :Base
           :Access Public
-          :Signature CalculatorWithDispose
+          :Signature ClassWithDispose
         ∇
 
         ∇ res←GetNewInstance number;ex
           :Access Public
-          :Signature NewClass←GetNewInstance Int32 number
-          res←⎕NEW NewClass number
+          :Signature AplClasses.NewClass←GetNewInstance Int32 number
+          res←⎕NEW AplClasses.NewClass number
         ∇
 
         ∇ res←Sum args;ex

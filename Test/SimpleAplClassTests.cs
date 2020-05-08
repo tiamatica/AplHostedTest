@@ -89,7 +89,7 @@ namespace Test {
                     try {
                         var apl = new SimpleAplClass(interpreter);
                         var result = apl.Call(innerLoopSize);
-                    } catch (Exception e) {
+                    } catch (Exception) {
 
                     }
                 });
@@ -117,7 +117,7 @@ namespace Test {
                     try {
                         var apl = new SimpleAplClass(interpreter);
                         var result = apl.Call(innerLoopSize);
-                    } catch (Exception e) {
+                    } catch (Exception) {
 
                     }
                 });
@@ -164,7 +164,7 @@ namespace Test {
                     var apl = new SimpleAplClass(interpreter);
                     var result = apl.CallWithArgument(15);
                     Assert.AreEqual(15, result);
-                } catch (Exception e) {
+                } catch (Exception) {
 
                 }
             });
@@ -190,7 +190,7 @@ namespace Test {
                     var apl = new SimpleAplClass(interpreter);
                     var result = apl.CallWithArgument(15);
                     Assert.AreEqual(15, result);
-                } catch (Exception e) {
+                } catch (Exception) {
 
                 }
             });

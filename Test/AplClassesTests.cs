@@ -60,7 +60,7 @@ namespace Test {
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(DyalogSyserrorException))]
         public void APLCoreTest() {
             var interpreter = new DyalogInterpreter();
             interpreter.SingleThreaded = true;
