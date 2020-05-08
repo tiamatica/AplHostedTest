@@ -41,8 +41,8 @@
     <Reference Include="AplClasses">
       <HintPath>..\AplOOP\bin\Debug\AplClasses.dll</HintPath>
     </Reference>
-    <Reference Include="bridge171-64_unicode">
-      <HintPath>..\DyalogBin\bridge171-64_unicode.dll</HintPath>
+    <Reference Include="bridge180-64_unicode">
+      <HintPath>..\DyalogBin\bridge180-64_unicode.dll</HintPath>
     </Reference>
     <Reference Include="dyalognet">
       <HintPath>..\DyalogBin\dyalognet.dll</HintPath>
@@ -72,7 +72,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(SolutionDir)DyalogBin\dyalogc64_unicode.exe" "$(TargetDir)"
-copy "$(SolutionDir)DyalogBin\dyalog171_64rt_unicode.dll" "$(TargetDir)"
-copy "$(SolutionDir)DyalogBin\dyalog171_64_unicode.dll" "$(TargetDir)"</PostBuildEvent>
+copy "$(SolutionDir)DyalogBin\dyalog180_64rt_unicode.dll" "$(TargetDir)"
+copy "$(SolutionDir)DyalogBin\dyalog180_64_unicode.dll" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -47,8 +47,8 @@
     <Reference Include="AplClasses">
       <HintPath>..\AplOOP\bin\Debug\AplClasses.dll</HintPath>
     </Reference>
-    <Reference Include="bridge171-64_unicode">
-      <HintPath>..\DyalogBin\bridge171-64_unicode.dll</HintPath>
+    <Reference Include="bridge180-64_unicode">
+      <HintPath>..\DyalogBin\bridge180-64_unicode.dll</HintPath>
     </Reference>
     <Reference Include="dyalognet">
       <HintPath>..\DyalogBin\dyalognet.dll</HintPath>

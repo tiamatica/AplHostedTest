@@ -33,8 +33,8 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="bridge171-64_unicode">
-      <HintPath>..\..\DyalogBin\bridge171-64_unicode.dll</HintPath>
+    <Reference Include="bridge180-64_unicode">
+      <HintPath>..\..\DyalogBin\bridge180-64_unicode.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
