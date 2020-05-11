@@ -51,5 +51,22 @@
         ∇
 
     :EndClass
+    
+    :Class B3
 
-:EndNamespace ⍝ AplGroup002
+        ∇ Make arg
+          :Access Public
+          :Implements Constructor
+          :Signature B3 Int32 arg
+          ⎕NEW B1 arg   ⍝ Should find B1 but throws VALUE ERROR
+        ∇
+    
+    :EndClass
+
+⍝    :Class B4 : B1 ⍝ Should work but causes issues for compiler  
+⍝    :EndClass
+ 
+    :Class B5 : AplGroup003.B1 ⍝ Qualified name works 
+    :EndClass
+
+:EndNamespace ⍝ AplGroup003

@@ -82,7 +82,7 @@
     <Compile Include="SimpleAplClassTests.cs" />
     <Compile Include="AplClassesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestGroup001.cs" />
+    <Compile Include="TestNameScopes.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AplOOP\AplOOP.csproj">
