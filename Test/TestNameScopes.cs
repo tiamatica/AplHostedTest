@@ -51,5 +51,43 @@ namespace Test {
             }
         }
 
+        [TestMethod]
+        public void NestedInstanceMultiHostNullNull() {
+            var interpreter = new DyalogInterpreter(null, null) {
+                SingleThreaded = true,
+                DeleteOnUnload = true
+            };
+
+            try {
+                var apl = new AplGroup003.B2(1, interpreter);
+                Assert.AreEqual(1, apl.ID());
+                Assert.AreEqual(1, apl.B2ID());
+                apl.Init();
+                Assert.AreEqual(2, apl.B1ID());
+                Assert.AreEqual(2, apl.B2ID());
+            } finally {
+                interpreter.Unload();
+            }  
+        }
+
+        [TestMethod]
+        public void NestedInstanceMultiHostPathNull() {
+            var interpreter = new DyalogInterpreter(".\\dyalog180_64_unicode.dll", null) {
+                SingleThreaded = true,
+                DeleteOnUnload = true
+            };
+
+            try {
+                var apl = new AplGroup003.B2(1, interpreter);
+                Assert.AreEqual(1, apl.ID());
+                Assert.AreEqual(1, apl.B2ID());
+                apl.Init();
+                Assert.AreEqual(2, apl.B1ID());
+                Assert.AreEqual(2, apl.B2ID());
+            } finally {
+                interpreter.Unload();
+            }
+
+        }
     }
 }

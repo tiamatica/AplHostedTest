@@ -2,11 +2,11 @@
 
     :Class B1 : AplGroup002.A1
     :Using System
-    :Using ,.\TestClassA.dll
+    :Using ,.\AplGroup002.dll
 
         ∇ Make arg
           :Access Public
-          :Implements Constructor
+          :Implements Constructor :Base arg
           :Signature B1 Int32 arg
           #.ID←arg
         ∇
@@ -21,37 +21,36 @@
 
     :Class B2 : AplGroup002.A1
     :Using System
-    :Using ,.\TestClassA.dll
+    :Using ,.\AplGroup002.dll
 
         :Field Private b1
 
         ∇ Make arg
           :Access Public
-          :Implements Constructor
+          :Implements Constructor :Base (arg)
           :Signature B2 Int32 arg
-          #.ID←arg
         ∇
 
         ∇ Init
           :Access Public
           :Signature Init
-          c1←⎕NEW AplGroup003.B1 (1+ID)
+          b1←⎕NEW AplGroup003.B1(1+ID)
         ∇
 
-        ∇ r←C1PID
+        ∇ r←B1ID
           :Access Public
-          :Signature Int32←C1PID
-          r←c1.ID
+          :Signature Int32←B1ID
+          r←b1.ID
         ∇
 
-        ∇ r←C2PID
+        ∇ r←B2ID
           :Access Public
-          :Signature Int32←C2PID
+          :Signature Int32←B2ID
           r←#.ID
         ∇
 
     :EndClass
-    
+
     :Class B3
 
         ∇ Make arg
@@ -60,13 +59,13 @@
           :Signature B3 Int32 arg
           ⎕NEW B1 arg   ⍝ Should find B1 but throws VALUE ERROR
         ∇
-    
+
     :EndClass
 
-⍝    :Class B4 : B1 ⍝ Should work but causes issues for compiler  
+⍝    :Class B4 : B1 ⍝ Should work but causes issues for compiler
 ⍝    :EndClass
- 
-    :Class B5 : AplGroup003.B1 ⍝ Qualified name works 
+
+    :Class B5 : AplGroup003.B1 ⍝ Qualified name works
     :EndClass
 
 :EndNamespace ⍝ AplGroup003
