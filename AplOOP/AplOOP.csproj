@@ -76,7 +76,7 @@
     <ItemGroup>
       <AplBaseFiles Include="AplBaseClasses.apln" />
       <AplBase1Files Include="AplBaseClasses1.apln" />
-      <AplClassesFiles Include="SimpleAplSample.apln;AplClasses.apln" />
+      <AplClassesFiles Include="SimpleAplSample.apln AplClasses.apln" />
       <AplGroup001_Files Include="AplGroup001.apln" />
       <AplGroup002_Files Include="AplGroup002.apln" />
       <AplGroup003_Files Include="AplGroup003.apln" />
