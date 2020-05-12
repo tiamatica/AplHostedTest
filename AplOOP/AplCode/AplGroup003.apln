@@ -1,13 +1,13 @@
 ﻿:Namespace AplGroup003
 
-    :Class B1 : AplGroup002.A1
+    :Class DerivedClass : AplGroup002.SimpleClass
     :Using System
     :Using ,.\AplGroup002.dll
 
         ∇ Make arg
           :Access Public
           :Implements Constructor :Base arg
-          :Signature B1 Int32 arg
+          :Signature DerivedClass Int32 arg
           #.ID←arg
         ∇
 
@@ -19,7 +19,7 @@
 
     :EndClass
 
-    :Class B2 : AplGroup002.A1
+    :Class NestedClassSimpleName : AplGroup002.SimpleClass
     :Using System
     :Using ,.\AplGroup002.dll
 
@@ -27,45 +27,60 @@
 
         ∇ Make arg
           :Access Public
-          :Implements Constructor :Base (arg)
-          :Signature B2 Int32 arg
+          :Implements Constructor :Base arg
+          :Signature NestedClassSimpleName Int32 arg
         ∇
 
         ∇ Init
           :Access Public
           :Signature Init
-          b1←⎕NEW AplGroup003.B1(1+ID)
+          b1←⎕NEW DerivedClass(1+ThisID)
         ∇
 
-        ∇ r←B1ID
+        ∇ r←NestedID
           :Access Public
-          :Signature Int32←B1ID
+          :Signature Int32←NestedID
           r←b1.ID
         ∇
 
-        ∇ r←B2ID
+        ∇ r←ThisID
           :Access Public
-          :Signature Int32←B2ID
+          :Signature Int32←ThisID
           r←#.ID
         ∇
 
     :EndClass
+  
+    :Class NestedClassQualifiedName : AplGroup002.SimpleClass
+    :Using System
+    :Using ,.\AplGroup002.dll
 
-    :Class B3
+        :Field Private b1
 
         ∇ Make arg
           :Access Public
-          :Implements Constructor
-          :Signature B3 Int32 arg
-          ⎕NEW B1 arg   ⍝ Should find B1 but throws VALUE ERROR
+          :Implements Constructor :Base arg
+          :Signature NestedClassQualifiedName Int32 arg
+        ∇
+
+        ∇ Init
+          :Access Public
+          :Signature Init
+          b1←⎕NEW AplGroup003.DerivedClass(1+ThisID)
+        ∇
+
+        ∇ r←NestedID
+          :Access Public
+          :Signature Int32←NestedID
+          r←b1.ID
+        ∇
+
+        ∇ r←ThisID
+          :Access Public
+          :Signature Int32←ThisID
+          r←#.ID
         ∇
 
     :EndClass
-
-⍝    :Class B4 : B1 ⍝ Should work but causes issues for compiler
-⍝    :EndClass
-
-    :Class B5 : AplGroup003.B1 ⍝ Qualified name works
-    :EndClass
-
+  
 :EndNamespace ⍝ AplGroup003

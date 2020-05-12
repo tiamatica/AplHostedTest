@@ -49,6 +49,8 @@
     <Compile Include="AplSystemErrorException.cs" />
     <Compile Include="ExceptionBase.cs" />
     <Compile Include="ExitSpecification.cs" />
+    <Compile Include="IHerd.cs" />
+    <Compile Include="IPenguin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeConversion.cs" />
   </ItemGroup>

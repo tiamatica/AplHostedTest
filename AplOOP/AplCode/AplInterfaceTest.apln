@@ -1,0 +1,87 @@
+﻿:Namespace AplInterfaceTest
+
+    :Class Herd: IHerd
+    :Using System
+    :Using DotNetClasses,.\DotNetClasses.dll
+
+        :Field penguins←⍬
+
+        ∇ make
+          :Implements Constructor
+          :Access Public
+          :Signature Herd
+        ∇
+
+        :Property Penguins
+        :Implements Property IHerd.Penguins
+        :Access Public
+            ∇ r←get
+              :Signature IPenguin[]←Penguins
+              r←penguins
+            ∇
+        :EndProperty
+
+        ∇ AddPenguinNoCast
+          :Access Public
+          penguins,←⎕NEW Penguin ⎕THIS
+        ∇
+
+        ∇ AddPenguinWithCast
+          :Access Public
+          penguins,←⎕NEW Penguin(IHerd ⎕CLASS ⎕THIS)
+        ∇
+
+        ∇ r←FlyNoCast
+          :Access Public
+          :Signature String[]←FlyNoCast
+          r←0⍴⊂''
+          :If 0≠≢Penguins
+              r←Penguins.Fly
+          :EndIf
+        ∇
+
+        ∇ r←FlyWithCast
+          :Access Public
+          :Signature String[]←FlyWithCast
+          r←0⍴⊂''
+          :If 0≠≢Penguins
+              r←(IPenguin ⎕CLASS¨Penguins).Fly
+          :EndIf
+        ∇
+
+    :EndClass ⍝ Herd
+
+
+    :Class Penguin: IPenguin
+    :Using System
+    :Using DotNetClasses,.\DotNetClasses.dll
+
+        ∇ make h
+          :Implements Constructor
+          :Access Public
+          :Signature Penguin IHerd h
+          herd←h
+        ∇
+
+        :Property Herd
+        :Implements Property IPenguin.Herd
+        :Access Public
+            ∇ r←get
+              :Signature IHerd←Herd
+              r←herd
+            ∇
+        :EndProperty
+
+        :Property Fly
+        :Implements Property IPenguin.Fly
+        :Access Public
+            ∇ r←get
+              :Signature String←Fly
+              r←'Although I am a bird, I cannot fly'
+            ∇
+        :EndProperty
+
+    :EndClass ⍝ Penguin
+
+:EndNamespace
+

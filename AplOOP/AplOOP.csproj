@@ -40,15 +40,13 @@
     <AplGroup001_dll>AplGroup001.dll</AplGroup001_dll>
     <AplGroup002_dll>AplGroup002.dll</AplGroup002_dll>
     <AplGroup003_dll>AplGroup003.dll</AplGroup003_dll>
+    <AplInterfaceTestDll>AplInterfaceTest.dll</AplInterfaceTestDll>
     <AplDllReferences>$(SolutionDir)/DotNetClasses/$(OutputPath)DotNetClasses.dll</AplDllReferences>
     <DyalogCompiler>dyalogc64_unicode.exe</DyalogCompiler>
     <AplBuildFolder>$(ProjectDir)aplbuild\</AplBuildFolder>
     <DyalogCompileCmd>$(DyalogCompiler) /v /multihost /t:library</DyalogCompileCmd>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="bridge180-64_unicode">
-      <HintPath>..\..\DyalogBin\bridge180-64_unicode.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -80,6 +78,7 @@
       <AplGroup001_Files Include="AplGroup001.apln" />
       <AplGroup002_Files Include="AplGroup002.apln" />
       <AplGroup003_Files Include="AplGroup003.apln" />
+      <AplInterfaceTestFiles Include="AplInterfaceTest.apln" />
       <AplDlls Include="$(AplBuildFolder)Apl*.dll" />
       <DyalogFiles Include="$(SolutionDir)/DyalogBin/*.*" />
     </ItemGroup>
@@ -103,6 +102,8 @@
     <Exec Command="$(DyalogCompileCmd) /o:$(AplGroup002_dll) @(AplGroup002_Files)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
     <Message Text="APL compile: @(AplGroup003_Files) " Importance="high" />
     <Exec Command="$(DyalogCompileCmd) /o:$(AplGroup003_dll) @(AplGroup003_Files)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
+    <Message Text="APL compile: @(AplInterfaceTestFiles) " Importance="high" />
+    <Exec Command="$(DyalogCompileCmd) /o:$(AplInterfaceTestDll) @(AplInterfaceTestFiles)" WorkingDirectory="$(AplBuildFolder)" IgnoreExitCode="true" />
     <Copy SourceFiles="@(AplDlls)" DestinationFolder="$(DllOut)" />
     <Error Condition="!Exists('$(DllOut)$(AplBaseDll)')" Text="APL code is not built to $(AplBaseDll)!" />
     <Error Condition="!Exists('$(DllOut)$(AplBase1Dll)')" Text="APL code is not built to $(AplBase1Dll)!" />
@@ -110,6 +111,7 @@
     <Error Condition="!Exists('$(DllOut)$(AplGroup001_dll)')" Text="APL code is not built to $(AplGroup001_dll)!" />
     <Error Condition="!Exists('$(DllOut)$(AplGroup002_dll)')" Text="APL code is not built to $(AplGroup002_dll)!" />
     <Error Condition="!Exists('$(DllOut)$(AplGroup003_dll)')" Text="APL code is not built to $(AplGroup003_dll)!" />
+    <Error Condition="!Exists('$(DllOut)$(AplInterfaceTestDll)')" Text="APL code is not built to $(AplInterfaceTestDll)!" />
   </Target>
   <Target Name="AfterBuild">
   </Target>

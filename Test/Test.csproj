@@ -56,6 +56,9 @@
     <Reference Include="AplGroup003">
       <HintPath>..\AplOOP\bin\Debug\AplGroup003.dll</HintPath>
     </Reference>
+    <Reference Include="AplInterfaceTest">
+      <HintPath>..\AplOOP\bin\Debug\AplInterfaceTest.dll</HintPath>
+    </Reference>
     <Reference Include="bridge180-64_unicode">
       <HintPath>..\DyalogBin\bridge180-64_unicode.dll</HintPath>
     </Reference>

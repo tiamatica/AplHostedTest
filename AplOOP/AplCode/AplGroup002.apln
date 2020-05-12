@@ -1,12 +1,12 @@
 ﻿:Namespace AplGroup002
 
-    :Class A1
+    :Class SimpleClass
     :Using System
-   
+
         ∇ Make arg
           :Access Public
           :Implements Constructor
-          :Signature A1 Int32 arg                                    
+          :Signature SimpleClass Int32 arg
           #.ID←arg
         ∇
 
@@ -17,5 +17,59 @@
         ∇
 
     :EndClass
+    
+    :Class NestedClassSimpleName
+
+        ∇ Make arg
+          :Access Public
+          :Implements Constructor
+          :Signature NestedClassSimpleName Int32 arg   
+          #.ID←0 
+          ⎕NEW SimpleClass arg   ⍝ Should find SimpleClass but throws VALUE ERROR
+        ∇
+
+        ∇ r←ID
+          :Access Public
+          :Signature Int32←ID
+          r←#.ID
+        ∇
+
+    :EndClass
+
+    :Class NestedClassQualifiedName
+
+        ∇ Make arg
+          :Access Public
+          :Implements Constructor
+          :Signature NestedClassQualifiedName Int32 arg
+          #.ID←0 
+          ⎕NEW AplGroup002.SimpleClass arg
+        ∇
+
+        ∇ r←ID
+          :Access Public
+          :Signature Int32←ID
+          r←#.ID
+        ∇
+
+    :EndClass
+
+    :Class DerivedClassSimpleName : SimpleClass ⍝ Should work but causes issues for compiler
+        ∇ Make arg
+          :Access Public
+          :Implements Constructor :Base arg
+          :Signature DerivedClassSimpleName Int32 arg
+        ∇
+    :EndClass
+
+    :Class DerivedClassQualifiedName : AplGroup002.SimpleClass ⍝ Qualified name works
+        ∇ Make arg
+          :Access Public
+          :Implements Constructor :Base arg
+          :Signature DerivedClassQualifiedName Int32 arg
+        ∇
+    :EndClass
 
 :EndNamespace ⍝ AplGroup002
+
+
