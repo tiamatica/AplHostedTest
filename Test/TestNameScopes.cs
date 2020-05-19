@@ -8,10 +8,8 @@ namespace Test {
     public class TestNameScopes {
 
         private DyalogInterpreter MultiHostNullNull() {
-            //return new DyalogInterpreter(null, null) {
-            return new DyalogInterpreter(".\\dyalog180_64_unicode.dll", null) {
-                SingleThreaded = true,
-                DeleteOnUnload = true
+            return new DyalogInterpreter(null, null) {
+                SingleThreaded = true
             };
         }
 
@@ -186,7 +184,6 @@ namespace Test {
             try {
                 var apl1 = new AplGroup003.NestedClassSimpleName(1, interpreter1);
                 Assert.AreEqual(1, apl1.ID());
-                Assert.AreEqual(1, apl1.NestedID());
                 Assert.AreEqual(1, apl1.ThisID());
                 apl1.Init();
                 Assert.AreEqual(2, apl1.ID());
@@ -195,7 +192,6 @@ namespace Test {
 
                 var apl2 = new AplGroup003.NestedClassSimpleName(11, interpreter2);
                 Assert.AreEqual(11, apl2.ID());
-                Assert.AreEqual(11, apl2.NestedID());
                 Assert.AreEqual(11, apl2.ThisID());
                 apl2.Init();
                 Assert.AreEqual(12, apl2.ID());
@@ -244,7 +240,6 @@ namespace Test {
             try {
                 var apl = new AplGroup003.NestedClassSimpleName(1, interpreter);
                 Assert.AreEqual(1, apl.ID());
-                Assert.AreEqual(1, apl.NestedID());
                 Assert.AreEqual(1, apl.ThisID());
                 apl.Init();
                 Assert.AreEqual(2, apl.ID());
@@ -265,7 +260,8 @@ namespace Test {
 
                 Assert.AreEqual(0, apl.FlyWithCast().Length);
                 apl.AddPenguinWithCast();
-                Assert.AreEqual(1, apl.FlyWithCast().Length);
+                apl.AddPenguinNoCast();
+                Assert.AreEqual(2, apl.FlyWithCast().Length);
 
             } finally {
                 interpreter.Unload();
@@ -274,6 +270,7 @@ namespace Test {
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DyalogNet.DyalogException))]
         public void InterfaceTestNoCast() {
             var interpreter = MultiHostNullNull();
 

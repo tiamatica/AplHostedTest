@@ -34,10 +34,14 @@
         ∇ r←FlyNoCast
           :Access Public
           :Signature String[]←FlyNoCast
-          r←0⍴⊂''
-          :If 0≠≢Penguins
-              r←Penguins.Fly
-          :EndIf
+          :Trap 0
+              r←0⍴⊂''
+              :If 0≠≢Penguins
+                  r←Penguins.Fly
+              :EndIf
+          :Else
+              ⎕SIGNAL 90
+          :EndTrap
         ∇
 
         ∇ r←FlyWithCast
@@ -84,4 +88,3 @@
     :EndClass ⍝ Penguin
 
 :EndNamespace
-

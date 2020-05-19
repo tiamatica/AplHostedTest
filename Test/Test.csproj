@@ -82,6 +82,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DWA.cs" />
     <Compile Include="SimpleAplClassTests.cs" />
     <Compile Include="AplClassesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

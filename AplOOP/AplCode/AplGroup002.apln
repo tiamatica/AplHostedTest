@@ -17,14 +17,14 @@
         ∇
 
     :EndClass
-    
+
     :Class NestedClassSimpleName
 
         ∇ Make arg
           :Access Public
           :Implements Constructor
-          :Signature NestedClassSimpleName Int32 arg   
-          #.ID←0 
+          :Signature NestedClassSimpleName Int32 arg
+          #.ID←0
           ⎕NEW SimpleClass arg   ⍝ Should find SimpleClass but throws VALUE ERROR
         ∇
 
@@ -42,7 +42,7 @@
           :Access Public
           :Implements Constructor
           :Signature NestedClassQualifiedName Int32 arg
-          #.ID←0 
+          #.ID←0
           ⎕NEW AplGroup002.SimpleClass arg
         ∇
 
@@ -70,6 +70,21 @@
         ∇
     :EndClass
 
+    :Class DWA
+    :Using DotNetClasses,.\DotNetClasses.dll
+        ∇ Make
+          :Access Public
+          :Implements Constructor
+          :Signature TestComplexDWA
+        ∇
+        ∇ r←TestComplexResultSet;data
+          :Access Public
+          :Signature Boolean←TestComplexResultSet  
+          2 ⎕NQ'#' 'setdflags' 161
+          data←TestDWA.ComplexResultSet⊂'sql'
+          r←data≡0 0((,1)(1 2⍴(,10)(,1)))
+        ∇
+    :EndClass
+
+
 :EndNamespace ⍝ AplGroup002
-
-
