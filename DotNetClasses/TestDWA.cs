@@ -4,46 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dyalog;
+using Dyalog.Interop;
 
 namespace DotNetClasses {
     class TestDWA {
-        public static Localp ComplexResultSet(Localp lp) {
+        public static Localp ComplexResultSet001(Localp lp) {
             var result = new Localp(lp);
-            result.mkarray(Dyalog.Interop.ELTYPES.APLPNTR, 3);
+            result.mkarray(ELTYPES.APLPNTR, 3);
 
             // resultVector
             var vector = new Localp(result);
-            vector.mkarray(Dyalog.Interop.ELTYPES.APLPNTR, 2);
+            vector.mkarray(ELTYPES.APLPNTR, 2);
             result.Dup(vector, new int[] { 2 }, new int[0]);
             vector.Cutp();
 
             // resultCountVector
-            vector = new Localp(result);
-            vector.mkarray(Dyalog.Interop.ELTYPES.APLLONG, 1);
-            result.Dup(vector, new int[] { 2, 0 }, new int[0]);
-            vector.Cutp();
+            var vector1 = new Localp(result);
+            vector1.mkarray(ELTYPES.APLLONG, 1);
+            result.Dup(vector1, new int[] { 2, 0 }, new int[0]);
+            vector1.Cutp();
 
             result.int32topock(0, new int[] { 0 });
             result.int32topock(0, new int[] { 1 });
 
             // resultMatrix - resultVector[1]
             var matrix = new Localp(result);
-            matrix.mkarray(Dyalog.Interop.ELTYPES.APLPNTR, new int[] { 1, 2 });
+            matrix.mkarray(ELTYPES.APLPNTR, new int[] { 1, 2 });
             result.Dup(matrix, new int[] { 2, 1 }, new int[0]);
             matrix.Cutp();
 
 
             // columnAndNullVectors[0] - resultMatrix[0,0] - values
-            vector = new Localp(result);
-            vector.mkarray(Dyalog.Interop.ELTYPES.APLLONG, 1000);
-            result.Dup(vector, new int[] { 2, 1, 0 }, new int[0]);
-            vector.Cutp();
+            var vector2 = new Localp(result);
+            vector2.mkarray(ELTYPES.APLLONG, 1000);
+            result.Dup(vector2, new int[] { 2, 1, 0 }, new int[0]);
+            vector2.Cutp();
 
             // columnAndNullVectors[1] - resultMatrix[0,1] - flags
-            vector = new Localp(result);
-            vector.mkarray(Dyalog.Interop.ELTYPES.APLBOOL, 1000);
-            result.Dup(vector, new int[] { 2, 1, 1 }, new int[0]);
-            vector.Cutp();
+            var vector3 = new Localp(result);
+            vector3.mkarray(ELTYPES.APLBOOL, 1000);
+            result.Dup(vector3, new int[] { 2, 1, 1 }, new int[0]);
+            vector3.Cutp();
 
             unsafe {
                 var index = 0;
@@ -69,6 +70,244 @@ namespace DotNetClasses {
             unsafe {
                 *(int*)(result.data(new int[] { 2, 0 }) + 0 * sizeof(int)) = 1;
             }
+
+            return result;
+        }
+        public static Localp ComplexResultSet002(Localp lp) {
+            var result = new Localp(lp);
+            result.mkarray(ELTYPES.APLPNTR, 3);
+
+            // resultVector
+            var vector = new Localp(result);
+            vector.mkarray(ELTYPES.APLPNTR, 2);
+            result.Dup(vector, new int[] { 2 }, new int[0]);
+
+            // resultCountVector
+            var vector1 = new Localp(result);
+            vector1.mkarray(ELTYPES.APLLONG, 1);
+            result.Dup(vector1, new int[] { 2, 0 }, new int[0]);
+
+            result.int32topock(0, new int[] { 0 });
+            result.int32topock(0, new int[] { 1 });
+
+            // resultMatrix - resultVector[1]
+            var matrix = new Localp(result);
+            matrix.mkarray(ELTYPES.APLPNTR, new int[] { 1, 2 });
+            result.Dup(matrix, new int[] { 2, 1 }, new int[0]);
+
+            // columnAndNullVectors[0] - resultMatrix[0,0] - values
+            var vector2 = new Localp(result);
+            vector2.mkarray(ELTYPES.APLLONG, 1000);
+            result.Dup(vector2, new int[] { 2, 1, 0 }, new int[0]);
+            
+            // columnAndNullVectors[1] - resultMatrix[0,1] - flags
+            var vector3 = new Localp(result);
+            vector3.mkarray(ELTYPES.APLBOOL, 1000);
+            result.Dup(vector3, new int[] { 2, 1, 1 }, new int[0]);
+            
+            unsafe {
+                var index = 0;
+                var value = 10;
+                var flag = true;
+                *(int*)(result.data(new int[] { 2, 1, 0 }) + index * sizeof(int)) = value;
+
+                byte* bp = (byte*)result.data(new int[] { 2, 1, 1 });
+                long byteno = index / 8;
+                byte bitno = (byte)(index % 8);
+                byte boolmask = (byte)(0x80 >> bitno);
+                bp += byteno;
+                if (flag) {
+                    *bp |= boolmask;
+                } else {
+                    *bp &= (byte)~boolmask;
+                }
+            }
+
+            result.resizevector(1, new int[] { 2, 1, 0 });
+            result.resizevector(1, new int[] { 2, 1, 1 });
+
+            unsafe {
+                *(int*)(result.data(new int[] { 2, 0 }) + 0 * sizeof(int)) = 1;
+            }
+
+            vector3.Cutp();
+            vector2.Cutp();
+            matrix.Cutp();
+            vector1.Cutp();
+            vector.Cutp();
+
+            return result;
+        }
+        public static Localp ComplexResultSet003(Localp lp) {
+            var result = new Localp(lp);
+            result.mkarray(ELTYPES.APLPNTR, 3);
+
+            // resultVector
+            var vector = new Localp(result);
+            vector.mkarray(ELTYPES.APLPNTR, 2);
+            result.Dup(vector, new int[] { 2 }, new int[0]);
+            
+            // resultCountVector
+            var vector1 = new Localp(result);
+            vector1.mkarray(ELTYPES.APLLONG, 1);
+            result.Dup(vector1, new int[] { 2, 0 }, new int[0]);
+        
+            result.int32topock(0, new int[] { 0 });
+            result.int32topock(0, new int[] { 1 });
+
+            // resultMatrix - resultVector[1]
+            var matrix = new Localp(result);
+            matrix.mkarray(ELTYPES.APLPNTR, new int[] { 1, 2 });
+            result.Dup(matrix, new int[] { 2, 1 }, new int[0]);
+            
+            // columnAndNullVectors[0] - resultMatrix[0,0] - values
+            var vector2 = new Localp(result);
+            vector2.mkarray(ELTYPES.APLLONG, 1000);
+            result.Dup(vector2, new int[] { 2, 1, 0 }, new int[0]);
+            
+            // columnAndNullVectors[1] - resultMatrix[0,1] - flags
+            var vector3 = new Localp(result);
+            vector3.mkarray(ELTYPES.APLBOOL, 1000);
+            result.Dup(vector3, new int[] { 2, 1, 1 }, new int[0]);
+       
+            unsafe {
+                var index = 0;
+                var value = 10;
+                var flag = true;
+                *(int*)(result.data(new int[] { 2, 1, 0 }) + index * sizeof(int)) = value;
+
+                byte* bp = (byte*)result.data(new int[] { 2, 1, 1 });
+                long byteno = index / 8;
+                byte bitno = (byte)(index % 8);
+                byte boolmask = (byte)(0x80 >> bitno);
+                bp += byteno;
+                if (flag) {
+                    *bp |= boolmask;
+                } else {
+                    *bp &= (byte)~boolmask;
+                }
+            }
+
+            result.resizevector(1, new int[] { 2, 1, 0 });
+            result.resizevector(1, new int[] { 2, 1, 1 });
+
+            unsafe {
+                *(int*)(result.data(new int[] { 2, 0 }) + 0 * sizeof(int)) = 1;
+            }
+
+            vector.Cutp();
+
+            return result;
+        }
+        public static Localp ComplexResultSet004(Localp lp) {
+            var result = new Localp(lp);
+            var handle = new Localp(lp);
+            result.mkarray(ELTYPES.APLPNTR, 3);
+
+            // resultVector
+            var vector = new Localp(result);
+            vector.mkarray(ELTYPES.APLPNTR, 2);
+            result.Dup(vector, new int[] { 2 }, new int[0]);
+            
+            // resultCountVector
+            var vector1 = new Localp(result);
+            vector1.mkarray(ELTYPES.APLLONG, 1);
+            result.Dup(vector1, new int[] { 2, 0 }, new int[0]);
+            
+            result.int32topock(0, new int[] { 0 });
+            result.int32topock(0, new int[] { 1 });
+
+            // resultMatrix - resultVector[1]
+            var matrix = new Localp(result);
+            matrix.mkarray(ELTYPES.APLPNTR, new int[] { 1, 2 });
+            result.Dup(matrix, new int[] { 2, 1 }, new int[0]);
+            
+            // columnAndNullVectors[0] - resultMatrix[0,0] - values
+            var vector2 = new Localp(result);
+            vector2.mkarray(ELTYPES.APLLONG, 1000);
+            result.Dup(vector2, new int[] { 2, 1, 0 }, new int[0]);
+            
+            // columnAndNullVectors[1] - resultMatrix[0,1] - flags
+            var vector3 = new Localp(result);
+            vector3.mkarray(ELTYPES.APLBOOL, 1000);
+            result.Dup(vector3, new int[] { 2, 1, 1 }, new int[0]);
+            
+            unsafe {
+                var index = 0;
+                var value = 10;
+                var flag = true;
+                *(int*)(result.data(new int[] { 2, 1, 0 }) + index * sizeof(int)) = value;
+
+                byte* bp = (byte*)result.data(new int[] { 2, 1, 1 });
+                long byteno = index / 8;
+                byte bitno = (byte)(index % 8);
+                byte boolmask = (byte)(0x80 >> bitno);
+                bp += byteno;
+                if (flag) {
+                    *bp |= boolmask;
+                } else {
+                    *bp &= (byte)~boolmask;
+                }
+            }
+
+            result.resizevector(1, new int[] { 2, 1, 0 });
+            result.resizevector(1, new int[] { 2, 1, 1 });
+
+            unsafe {
+                *(int*)(result.data(new int[] { 2, 0 }) + 0 * sizeof(int)) = 1;
+            }
+
+            handle.Cutp();
+
+            return result;
+        }
+        public static Localp ComplexResultSet005(Localp lp) {
+            var result = new Localp(lp);
+            result.mkarray(ELTYPES.APLPNTR, 3);
+
+            // resultVector
+            result.mkarray(ELTYPES.APLPNTR, 2, 2);
+            
+            // resultCountVector
+            result.mkarray(ELTYPES.APLLONG, 1, new int[] { 2, 0 });
+            
+            result.int32topock(0, new int[] { 0 });
+            result.int32topock(0, new int[] { 1 });
+
+            // resultMatrix - resultVector[1]
+            result.mkarray(ELTYPES.APLPNTR, new int[] { 1, 2 }, new int[] { 2, 1 });
+        
+            // columnAndNullVectors[0] - resultMatrix[0,0] - values
+            result.mkarray(ELTYPES.APLLONG, 1000, new int[] { 2, 1, 0 });
+          
+            // columnAndNullVectors[1] - resultMatrix[0,1] - flags
+            result.mkarray(ELTYPES.APLBOOL, 1000, new int[] { 2, 1, 1 });
+            
+            unsafe {
+                var index = 0;
+                var value = 10;
+                var flag = true;
+                *(int*)(result.data(new int[] { 2, 1, 0 }) + index * sizeof(int)) = value;
+
+                byte* bp = (byte*)result.data(new int[] { 2, 1, 1 });
+                long byteno = index / 8;
+                byte bitno = (byte)(index % 8);
+                byte boolmask = (byte)(0x80 >> bitno);
+                bp += byteno;
+                if (flag) {
+                    *bp |= boolmask;
+                } else {
+                    *bp &= (byte)~boolmask;
+                }
+            }
+
+            result.resizevector(1, new int[] { 2, 1, 0 });
+            result.resizevector(1, new int[] { 2, 1, 1 });
+
+            unsafe {
+                *(int*)(result.data(new int[] { 2, 0 }) + 0 * sizeof(int)) = 1;
+            }
+            
             return result;
         }
     }

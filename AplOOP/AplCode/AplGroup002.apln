@@ -71,17 +71,50 @@
     :EndClass
 
     :Class DWA
+    :Using System
     :Using DotNetClasses,.\DotNetClasses.dll
+    :Using System.Diagnostics
         ∇ Make
           :Access Public
           :Implements Constructor
-          :Signature TestComplexDWA
+          :Signature DWA
+          :If System.Diagnostics.Debugger.IsAttached
+              1 ⎕STOP¨⎕NL ¯3.1
+          :EndIf
         ∇
-        ∇ r←TestComplexResultSet;data
+        ∇ r←TestComplexResultSet001;data
           :Access Public
-          :Signature Boolean←TestComplexResultSet  
+          :Signature Boolean←TestComplexResultSet001
           2 ⎕NQ'#' 'setdflags' 161
-          data←TestDWA.ComplexResultSet⊂'sql'
+          data←TestDWA.ComplexResultSet001⊂'sql'
+          r←data≡0 0((,1)(1 2⍴(,10)(,1)))
+        ∇
+        ∇ r←TestComplexResultSet002;data
+          :Access Public
+          :Signature Boolean←TestComplexResultSet002
+          2 ⎕NQ'#' 'setdflags' 161
+          data←TestDWA.ComplexResultSet002⊂'sql'
+          r←data≡0 0((,1)(1 2⍴(,10)(,1)))
+        ∇
+        ∇ r←TestComplexResultSet003;data
+          :Access Public
+          :Signature Boolean←TestComplexResultSet003
+          2 ⎕NQ'#' 'setdflags' 161
+          data←TestDWA.ComplexResultSet003⊂'sql'
+          r←data≡0 0((,1)(1 2⍴(,10)(,1)))
+        ∇
+        ∇ r←TestComplexResultSet004;data
+          :Access Public
+          :Signature Boolean←TestComplexResultSet004
+          2 ⎕NQ'#' 'setdflags' 161
+          data←TestDWA.ComplexResultSet004⊂'sql'
+          r←data≡0 0((,1)(1 2⍴(,10)(,1)))
+        ∇
+        ∇ r←TestComplexResultSet005;data
+          :Access Public
+          :Signature Boolean←TestComplexResultSet005
+          2 ⎕NQ'#' 'setdflags' 161
+          data←TestDWA.ComplexResultSet005⊂'sql'
           r←data≡0 0((,1)(1 2⍴(,10)(,1)))
         ∇
     :EndClass
