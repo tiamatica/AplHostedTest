@@ -66,5 +66,27 @@ namespace Test {
                 int1.Unload();
             }
         }
+        [TestMethod]
+        public void ResizeArray001() {
+            var int1 = MultiHostNullNull();
+            try {
+                var apl1 = new AplGroup002.DWA(int1);
+                var res1 = apl1.TestResizeArray001();
+                Assert.IsTrue(res1);
+            } finally {
+                int1.Unload();
+            }
+        }
+        [TestMethod]
+        public void ResizeArray002() {
+            var int1 = MultiHostNullNull();
+            try {
+                var apl1 = new AplGroup002.DWA(int1);
+                var res1 = apl1.TestResizeArray002();
+                Assert.IsTrue(res1);
+            } finally {
+                int1.Unload();
+            }
+        }
     }
 }

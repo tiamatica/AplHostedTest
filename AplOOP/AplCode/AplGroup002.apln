@@ -117,6 +117,20 @@
           data←TestDWA.ComplexResultSet005⊂'sql'
           r←data≡0 0((,1)(1 2⍴(,10)(,1)))
         ∇
+        ∇ r←TestResizeArray001;data
+          :Access Public
+          :Signature Boolean←TestResizeArray001
+          2 ⎕NQ'#' 'setdflags' 161
+          data←TestDWA.ResizeArray001⊂'sql'
+          r←data≡(⍳1000)(,∘⍕¨⍳1000)
+        ∇
+        ∇ r←TestResizeArray002;data
+          :Access Public
+          :Signature Boolean←TestResizeArray002
+          2 ⎕NQ'#' 'setdflags' 161
+          data←TestDWA.ResizeArray002⊂'sql'
+          r←data≡(⍳1000)(,∘⍕¨⍳1000)
+        ∇
     :EndClass
 
 
