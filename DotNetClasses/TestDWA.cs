@@ -324,8 +324,8 @@ namespace DotNetClasses {
 
             for(var i = 0; i < 1000; i++) {
                 if (i == result.bound(0)) {
-                    result.resizevector(i + 10, 0);
-                    result.resizevector(i + 10, 1);
+                    result.resizevector(i + 10, new int[] { 0 });
+                    result.resizevector(i + 10, new int[] { 1 });
                 }
 
                 unsafe {
