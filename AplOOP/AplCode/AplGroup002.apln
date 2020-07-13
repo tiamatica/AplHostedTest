@@ -131,7 +131,7 @@
           ⎕IO←0
           2 ⎕NQ'#' 'setdflags' 161
           data←TestDWA.ResizeArray002⊂'sql'
-          r←data≡(⍳1000)(,∘⍕¨⍳1000)
+          r←data≡(⍳20)(,∘⍕¨⍳20)
         ∇
     :EndClass
 

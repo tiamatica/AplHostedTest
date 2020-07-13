@@ -349,7 +349,7 @@ namespace DotNetClasses {
             var strings = new Localp(lp);
             strings.mkarray(ELTYPES.APLPNTR, 10);
 
-            for (var i = 0; i < 1000; i++) {
+            for (var i = 0; i < 20; i++) {
                 if (i == int32s.bound()) {
                     int32s.resizevector(i + 10);
                     strings.resizevector(i + 10);
