@@ -135,5 +135,21 @@
         ∇
     :EndClass
 
+    :Class ResourceTests
+    :Using System
+
+        ∇ Make
+          :Access Public
+          :Implements Constructor
+          :Signature A1
+        ∇
+
+        ∇ res←Echo arg
+          :Access Public
+          :Signature Int32←Echo Int32 arg
+          res←arg
+        ∇
+
+    :EndClass       
 
 :EndNamespace ⍝ AplGroup002
