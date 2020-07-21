@@ -54,22 +54,22 @@
 
     :EndClass
 
-    :Class DerivedClassSimpleName : SimpleClass ⍝ Should work but causes issues for compiler
+    :Class DerivedClassSimpleName : SimpleClass 
         ∇ Make arg
           :Access Public
           :Implements Constructor :Base arg
           :Signature DerivedClassSimpleName Int32 arg
         ∇
     :EndClass
-
-    :Class DerivedClassQualifiedName : AplGroup002.SimpleClass ⍝ Qualified name works
-        ∇ Make arg
-          :Access Public
-          :Implements Constructor :Base arg
-          :Signature DerivedClassQualifiedName Int32 arg
-        ∇
-    :EndClass
-
+      
+⍝    :Class DerivedClassQualifiedName : AplGroup002.SimpleClass ⍝ Qualified name works
+⍝        ∇ Make arg
+⍝          :Access Public
+⍝          :Implements Constructor :Base arg
+⍝          :Signature DerivedClassQualifiedName Int32 arg
+⍝        ∇
+⍝    :EndClass
+⍝
     :Class DWA
     :Using System
     :Using DotNetClasses,.\DotNetClasses.dll
@@ -148,6 +148,20 @@
           :Access Public
           :Signature Int32←Echo Int32 arg
           res←arg
+        ∇
+        
+        ∇ res←CreateForm name
+          :Access Public
+          :Signature Boolean←CreateForm String name
+          name #.⎕WC'Form' name ('Visible' 0)('Active' 0)
+          res←9=#.⎕NC name
+        ∇
+        
+        ∇ res←Expunge name
+          :Access Public
+          :Signature Boolean←Expunge String name
+          #.⎕EX name 
+          res←0=#.⎕NC name
         ∇
 
     :EndClass       

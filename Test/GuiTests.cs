@@ -24,9 +24,9 @@ namespace Test {
             return GetGuiResources(process.Handle, USER_OBJECTS);
         }
 
-        private static DyalogInterpreter CreateInterpreter() {
+        private static DyalogInterpreter CreateInterpreter(bool runAsService = true) {
             var interpreterSettings = new Dictionary<string, string> {
-                ["RUNASSERVICE"] = "2",
+                ["RUNASSERVICE"] = runAsService ? "2" : "0",
                 ["MAXWS"] = "1G"
             };
             return new DyalogInterpreter(null, interpreterSettings) {
@@ -67,35 +67,142 @@ namespace Test {
             }
         }
 
-        private void EchoReload(int count) {
+        enum TestType {
+            Echo,
+            Gui
+        }
 
+        private void TestReload(TestType testType, int count) {
+            var process = Process.GetCurrentProcess();
+            var initialGdiHandleCount = GetGdiObjectCount(process);
+            var initialUserHandleCount = GetUserObjectCount(process);
+            int firstGdiHandleCount = 0;
+            int firstUserHandleCount = 0;
+            
             for (int i = 0; i < count; i++) {
-                var interpreter = CreateInterpreter();
+                var interpreter = CreateInterpreter(testType != TestType.Gui);
 
                 try {
                     var apl = new AplGroup002.ResourceTests(interpreter);
-                    var result = apl.Echo(i);
-                    Assert.AreEqual(i, result);
+                    if (testType == TestType.Echo) {
+                        var result = apl.Echo(i);
+                        Assert.AreEqual(i, result);
+                    } else if (testType == TestType.Gui) {
+                        var name = $"form{i}";
+                        var result = apl.CreateForm(name);
+                        Assert.IsTrue(result);
+                        //result = apl.Expunge(name);
+                        //Assert.IsTrue(result);
+                    }
                 } finally {
                     Assert.IsTrue(interpreter.Unload());
                 }
+                if (i == 0) {
+                    firstGdiHandleCount = GetGdiObjectCount(process);
+                    firstUserHandleCount = GetUserObjectCount(process);
+                }
             }
+            var finalGdiHandleCount = GetGdiObjectCount(process);
+            var finalUserHandleCount = GetUserObjectCount(process);
+
+            Assert.AreEqual(finalGdiHandleCount, firstGdiHandleCount);
+            Assert.AreEqual(finalUserHandleCount, firstUserHandleCount);
+        }
+
+        private void TestSingleSession(TestType testType, int count) {
+            var process = Process.GetCurrentProcess();
+            TestReload(testType, 1);
+            var initialGdiHandleCount = GetGdiObjectCount(process);
+            var initialUserHandleCount = GetUserObjectCount(process);
+            
+            var interpreter = CreateInterpreter(testType != TestType.Gui);
+            var apl = new AplGroup002.ResourceTests(interpreter);
+
+            try {
+                for (int i = 0; i < count; i++) {
+
+                    if (testType == TestType.Echo) {
+                        var result = apl.Echo(i);
+                        Assert.AreEqual(i, result);
+                    } else if (testType == TestType.Gui) {
+                        var name = $"form{i}";
+                        var result = apl.CreateForm(name);
+                        Assert.IsTrue(result);
+                        //result = apl.Expunge(name);
+                        //Assert.IsTrue(result);
+                    }
+                }
+            } finally {
+                apl.Dispose();
+                Assert.IsTrue(interpreter.Unload());
+            }
+            var finalGdiHandleCount = GetGdiObjectCount(process);
+            var finalUserHandleCount = GetUserObjectCount(process);
+
+            Assert.AreEqual(finalGdiHandleCount, initialGdiHandleCount);
+            Assert.AreEqual(finalUserHandleCount, initialUserHandleCount);
         }
 
         [TestMethod]
         public void EchoReload10() {
-            EchoReload(10);
+            TestReload(TestType.Echo, 10);
         }
 
         [TestMethod]
         public void EchoReload100() {
-            EchoReload(100);
+            TestReload(TestType.Echo, 100);
         }
 
         [TestMethod]
         public void EchoReload1000() {
-            EchoReload(1000);
+            TestReload(TestType.Echo, 1000);
         }
+
+        [TestMethod]
+        public void GuiReload10() {
+            TestReload(TestType.Gui, 10);
+        }
+
+        [TestMethod]
+        public void GuiReload100() {
+            TestReload(TestType.Gui, 100);
+        }
+
+        [TestMethod]
+        public void GuiReload1000() {
+            TestReload(TestType.Gui, 1000);
+        }
+
+        [TestMethod]
+        public void EchoSingleSession10() {
+            TestSingleSession(TestType.Echo, 10);
+        }
+
+        [TestMethod]
+        public void EchoSingleSession100() {
+            TestSingleSession(TestType.Echo, 100);
+        }
+
+        [TestMethod]
+        public void EchoSingleSession1000() {
+            TestSingleSession(TestType.Echo, 1000);
+        }
+
+        [TestMethod]
+        public void GuiSingleSession10() {
+            TestSingleSession(TestType.Gui, 10);
+        }
+
+        [TestMethod]
+        public void GuiSingleSession100() {
+            TestSingleSession(TestType.Gui, 100);
+        }
+
+        [TestMethod]
+        public void GuiSingleSession1000() {
+            TestSingleSession(TestType.Gui, 1000);
+        }
+
     }
 
 }
