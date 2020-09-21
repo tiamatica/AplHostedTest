@@ -36,13 +36,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AplBase">
-      <HintPath>..\AplOOP\bin\Debug\AplBase.dll</HintPath>
+      <HintPath>..\AplOOP\aplbuild\AplBase.dll</HintPath>
     </Reference>
     <Reference Include="AplBase1">
-      <HintPath>..\AplOOP\bin\Debug\AplBase1.dll</HintPath>
+      <HintPath>..\AplOOP\aplbuild\AplBase1.dll</HintPath>
     </Reference>
     <Reference Include="AplClasses">
-      <HintPath>..\AplOOP\bin\Debug\AplClasses.dll</HintPath>
+      <HintPath>..\AplOOP\aplbuild\AplClasses.dll</HintPath>
     </Reference>
     <Reference Include="bridge180-64_unicode">
       <HintPath>..\DyalogBin\bridge180-64_unicode.dll</HintPath>

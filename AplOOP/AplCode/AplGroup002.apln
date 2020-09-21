@@ -165,5 +165,42 @@
         ∇
 
     :EndClass       
+    
+    :Class ClassA: AplGroup001.ClassA
+    :Using ,.\AplGroup001.dll
+   
+        ∇ make
+          :Access Public
+          :Implements Constructor
+          :Signature ClassA
+        ∇
+
+        ∇ World
+          :Access Public
+          :Signature World
+          HelloWorld   
+          ∘∘∘
+          ⍝
+        ∇
+
+    :EndClass
+
+    :Class AClass: ClassA
+   
+        ∇ make
+          :Access Public
+          :Implements Constructor
+          :Signature AClass
+        ∇
+
+        ∇ Hello
+          :Access Public
+          :Signature Hello
+          World
+          ⍝
+        ∇
+
+    :EndClass
+
 
 :EndNamespace ⍝ AplGroup002

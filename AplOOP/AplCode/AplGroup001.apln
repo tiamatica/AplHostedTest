@@ -1,4 +1,29 @@
 ﻿:Namespace AplGroup001
+    :Class ClassA
+    :Using ,
+        ∇ make
+          :Access Public
+          :Implements Constructor
+          :Signature ClassA
+        ∇
+
+        ∇ r←HelloWorld
+          :Access Public
+          :Signature System.String←HelloWorld
+          r←'Hello you!'
+          ⍝
+        ∇
+
+        ∇ Stop
+          :Access Public
+          :Signature Stop
+          1 ⎕STOP'HelloWorld'
+          ⍝
+        ∇
+
+    :EndClass
+
+
 :Namespace SubSpace
 
 :Class A1

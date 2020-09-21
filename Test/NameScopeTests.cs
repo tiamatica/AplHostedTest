@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test {
     [TestClass]
-    public class TestNameScopes {
+    public class NameScopeTests {
 
         private DyalogInterpreter MultiHostNullNull() {
             return new DyalogInterpreter(null, null) {
@@ -250,7 +250,7 @@ namespace Test {
             }
 
         }
-        
+
         [TestMethod]
         public void InterfaceTestWithCast() {
             var interpreter = MultiHostNullNull();
