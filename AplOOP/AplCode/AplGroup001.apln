@@ -14,10 +14,10 @@
           ⍝
         ∇
 
-        ∇ Stop
-          :Access Public
-          :Signature Stop
-          1 ⎕STOP'HelloWorld'
+        ∇ Stop(name)
+          :Access Public Overridable
+          :Signature Stop System.String name
+          1 ⎕STOP name
           ⍝
         ∇
 

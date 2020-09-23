@@ -54,14 +54,14 @@
 
     :EndClass
 
-    :Class DerivedClassSimpleName : SimpleClass 
+    :Class DerivedClassSimpleName : SimpleClass
         ∇ Make arg
           :Access Public
           :Implements Constructor :Base arg
           :Signature DerivedClassSimpleName Int32 arg
         ∇
     :EndClass
-      
+
 ⍝    :Class DerivedClassQualifiedName : AplGroup002.SimpleClass ⍝ Qualified name works
 ⍝        ∇ Make arg
 ⍝          :Access Public
@@ -149,26 +149,27 @@
           :Signature Int32←Echo Int32 arg
           res←arg
         ∇
-        
+
         ∇ res←CreateForm name
           :Access Public
           :Signature Boolean←CreateForm String name
-          name #.⎕WC'Form' name ('Visible' 0)('Active' 0)
+          name #.⎕WC'Form'name('Visible' 0)('Active' 0)
           res←9=#.⎕NC name
         ∇
-        
+
         ∇ res←Expunge name
           :Access Public
           :Signature Boolean←Expunge String name
-          #.⎕EX name 
+          #.⎕EX name
           res←0=#.⎕NC name
         ∇
 
-    :EndClass       
-    
+    :EndClass
+
     :Class ClassA: AplGroup001.ClassA
+    :Using ,
     :Using ,.\AplGroup001.dll
-   
+
         ∇ make
           :Access Public
           :Implements Constructor
@@ -178,15 +179,26 @@
         ∇ World
           :Access Public
           :Signature World
-          HelloWorld   
+          HelloWorld
           ∘∘∘
           ⍝
+        ∇
+
+        ∇ Stop(name)
+          :Access Public Override
+          :Signature Stop System.String name
+          :If 3=⎕NC name
+              1 ⎕STOP name
+          :Else
+              ⎕BASE.Stop,⊂name
+          :EndIf
         ∇
 
     :EndClass
 
     :Class AClass: ClassA
-   
+    :Using ,
+    
         ∇ make
           :Access Public
           :Implements Constructor
@@ -197,6 +209,17 @@
           :Access Public
           :Signature Hello
           World
+          ⍝
+        ∇
+
+        ∇ Stop(name)
+          :Access Public Override
+          :Signature Stop System.String name
+          :If 3=⎕NC name
+              1 ⎕STOP name
+          :Else
+              ⎕BASE.Stop,⊂name
+          :EndIf
           ⍝
         ∇
 
