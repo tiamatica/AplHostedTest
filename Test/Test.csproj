@@ -82,6 +82,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="CodeFileTests.cs" />
     <Compile Include="DebugTests.cs" />
     <Compile Include="DWA.cs" />
     <Compile Include="GuiTests.cs" />

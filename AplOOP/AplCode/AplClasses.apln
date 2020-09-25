@@ -5,7 +5,7 @@
 :Using AplBaseClasses1,.\AplBase1.dll
 
 ⍝     :Class Calculator : AplBase1
-      :Class Calculator : AplBase
+    :Class Calculator : AplBase
         ∇ Make
           :Access Public Instance
           :Implements Constructor :Base
@@ -149,4 +149,51 @@
 
     :EndClass
 
+    :Class CodeFile
+    :Using System
+
+        ∇ Make
+          :Implements Constructor
+          :Access Public
+          :Signature CodeFile
+        ∇
+
+        ∇ CreateLookUp(file length)
+          :Access Public
+          :Signature CreateLookUp String file, Int32 length
+          'Cache'#.⎕NS''
+          #.Cache.LookUp←(⍳length)∘⍳
+          #.Cache.LookUp 9
+          (,⊂'Cache')#.(8667⌶)1 file
+        ∇
+
+        ∇ CreateSimpleCodeFile file
+          :Access Public
+          :Signature CreateSimpleCodeFile String file
+          #.fn1←{⍳⍵}
+          (,⊂'fn1')#.(8667⌶)1 file
+        ∇
+
+
+        ∇ CreateCodeFileFromFolder(slot file sourcefolder);files;names
+          :Access Public
+          :Signature CreateCodeFileFromFolder Int32 slot, String file, String sourcefolder
+          files←⊃⎕NINFO⍠('Recurse' 1)('Wildcard' 1)⊢sourcefolder,'\*.aplf'
+          names←⊃,/2 #.⎕FIX¨(⊂'file://'),¨files
+          names #.(8667⌶)slot file
+        ∇                                                                
+
+        ∇ AttachCodeFiles(files)
+          :Access Public
+          :Signature AttachCodeFiles String[] files
+          #.(8666⌶)files
+        ∇
+
+        ∇ r←WSCheck
+          :Access Public
+          :Signature Int32←WSCheck
+          r←2 ⎕NQ'.' 'wscheck'
+        ∇
+
+    :EndClass
 :EndNamespace
