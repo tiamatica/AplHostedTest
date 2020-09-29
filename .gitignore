@@ -3,16 +3,8 @@
 ################################################################################
 
 .vs
-AplOOP/aplbuild
-AplOOP/bin
-AplOOP/obj
-AplResourceTestApp/bin
-AplResourceTestApp/obj
-DotNetClasses/bin
-DotNetClasses/obj
-MultiInstanceNet/bin
-MultiInstanceNet/obj
-Test/bin
-Test/obj
+aplbuild
+bin
+obj
 packages
 DyalogBin

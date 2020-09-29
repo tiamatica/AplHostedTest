@@ -164,29 +164,71 @@
           'Cache'#.⎕NS''
           #.Cache.LookUp←(⍳length)∘⍳
           #.Cache.LookUp 9
-          (,⊂'Cache')#.(8667⌶)1 file
+          (,⊂'Cache')#.(8669⌶)1 file
         ∇
 
         ∇ CreateSimpleCodeFile file
           :Access Public
           :Signature CreateSimpleCodeFile String file
           #.fn1←{⍳⍵}
-          (,⊂'fn1')#.(8667⌶)1 file
+          (,⊂'fn1')#.(8669⌶)1 file
         ∇
 
+        ∇ CreateCodeFile file;names
+          :Access Public
+          :Signature CreateCodeFile String file
+          names←#.⎕NL 3
+          names #.(8669⌶)1 file
+        ∇
 
-        ∇ CreateCodeFileFromFolder(slot file sourcefolder);files;names
+        ∇ LoadWS file
+          :Access Public
+          :Signature LoadWS String file
+          #.⎕CY file
+        ∇
+
+        ∇ CreateCodeFileFromFolder(slot file sourcefolder);files;names;sink
           :Access Public
           :Signature CreateCodeFileFromFolder Int32 slot, String file, String sourcefolder
           files←⊃⎕NINFO⍠('Recurse' 1)('Wildcard' 1)⊢sourcefolder,'\*.aplf'
           names←⊃,/2 #.⎕FIX¨(⊂'file://'),¨files
-          names #.(8667⌶)slot file
-        ∇                                                                
+         ⍝ sink←#.(5178⌶)¨names
+          names #.(8669⌶)slot file
+        ∇
+
+        ∇ Execute expr
+          :Access Public
+          :Signature Execute String expr
+          ⍎expr
+        ∇
 
         ∇ AttachCodeFiles(files)
           :Access Public
           :Signature AttachCodeFiles String[] files
-          #.(8666⌶)files
+          #.(8668⌶)files
+        ∇
+
+        ∇ GenerateTfns fn;∆;sfns;⎕IO;subs;sub;l;r;s
+          :Access Public
+          :Signature GenerateTfns String fn 
+          ⎕IO←0
+          ∆←''
+          ∆,←⊂'c←a ',fn,' b'
+          ∆,←⊂'a b-←1'
+          :If 4<≢fn
+              ∆,←⊂'c←a+b+',⍕?10
+          :Else
+              sfns←(⊂fn),¨⍕¨⍳10
+              GenerateTfns¨sfns
+              ∆,←⊂'c←',⍕?10
+              subs←100(?⍴)10
+              :For sub :In subs
+                  l r←'abc'[?3 3]
+                  ∆,←⊂'c←',l,' ',fn,(⍕sub),' ',r
+              :EndFor
+          :EndIf
+         
+          s←#.⎕FX ∆
         ∇
 
         ∇ r←WSCheck
