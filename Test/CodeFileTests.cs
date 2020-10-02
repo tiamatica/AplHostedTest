@@ -141,6 +141,21 @@ namespace Test {
             aplc3.Execute("#.fn1 3");
             
         }
+        [TestMethod]
+        public void TestUseSharedCodeFileNamespaceMultiHost() {
+            var codefile = Path.Combine(Path.GetTempPath(), "LookUp.dwx");
+            if (File.Exists(codefile)) File.Delete(codefile);
+            var interpreter = CreateInterpreter();
+            var aplc = new CodeFile(interpreter);
+            aplc.CreateLookUp(codefile, 100);
+            aplc.Dispose();
+            interpreter.Unload();
+
+            var interpreter1 = CreateInterpreter(new[] { codefile });
+            var interpreter2 = CreateInterpreter(new[] { codefile });
+            var interpreter3 = CreateInterpreter(new[] { codefile });
+
+        }
 
     }
 }
