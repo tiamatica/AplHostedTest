@@ -198,7 +198,7 @@
 
     :Class AClass: ClassA
     :Using ,
-    
+
         ∇ make
           :Access Public
           :Implements Constructor
@@ -225,5 +225,33 @@
 
     :EndClass
 
+    :Class ReturnObjects
+    :Using ,.\DotNetClasses.dll
+
+        ∇ make
+          :Access Public
+          :Implements Constructor
+          :Signature ReturnObjects
+        ∇
+
+        ∇ r←ListToCS no
+          :Access Public
+          :Signature DotNetClasses.DataItemClass[]←ListToCS System.Int32 no
+          r←{
+              dc←⎕NEW DotNetClasses.DataItemClass
+              dc.intItem←⍵
+              dc.stringItem←,⍕⍵
+              dc.subItem←⎕NEW DotNetClasses.DataSubItem(('Sub',⍕⍵)(1 2 3))
+              dc
+          }¨⍳no
+        ∇
+
+        ∇ ListFromCS no;tsis
+          :Access Public
+          :Signature ListFromCS System.Int32 no
+          tsis←DotNetClasses.ReturnObjects.ListOfClasses no
+        ∇
+
+    :EndClass
 
 :EndNamespace ⍝ AplGroup002

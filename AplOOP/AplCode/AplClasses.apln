@@ -201,6 +201,14 @@
           :Signature Execute String expr
           ⍎expr
         ∇
+                                       
+        ∇ ReadVars starting;names;sink
+          :Access Public
+          :Signature ReadVars String starting
+          names←'∆'#.⎕NL 2
+          names⌿⍨←⊣/starting⍷names 
+          sink←#.⍎⍤1⊢names
+        ∇
 
         ∇ AttachCodeFiles(files)
           :Access Public
