@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test {
     [TestClass]
+    [DoNotParallelize]
     public class CodeFileTests {
         private TestContext testContextInstance;
 
@@ -45,7 +46,7 @@ namespace Test {
             var interpreter1 = CreateInterpreter();
             var interpreter2 = CreateInterpreter();
 
-            var file = Path.Combine(Path.GetTempPath(), "LookUp.dwx");
+            var file = Path.Combine(Path.GetTempPath(), $"LookUp{length}.dwx");
             File.Delete(file);
             var test1 = new CodeFile(interpreter1);
 
@@ -74,7 +75,7 @@ namespace Test {
 
         [TestMethod]
         public void TestAttachSameCodeFileTwice() {
-            var codefile = Path.Combine(Path.GetTempPath(), "simplecodefile.dwx");
+            var codefile = Path.Combine(Path.GetTempPath(), "simplecodefile2.dwx");
             if (File.Exists(codefile)) File.Delete(codefile);
             var interpreter1 = CreateInterpreter();
             var aplc = new CodeFile(interpreter1);
@@ -90,6 +91,7 @@ namespace Test {
         }
 
         [TestMethod]
+        [Ignore]
         public void TestCreateCodeFileFromSource() {
 
             var folderpath = Path.Combine(Path.GetTempPath(), "codefiletests");
