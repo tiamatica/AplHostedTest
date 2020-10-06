@@ -158,27 +158,51 @@
           :Signature CodeFile
         ∇
 
-        ∇ CreateLookUp(file length)
+        ∇ CreateLookUp(file length slot)
           :Access Public
-          :Signature CreateLookUp String file, Int32 length
+          :Signature CreateLookUp String file, Int32 length, Int32 slot
           'Cache'#.⎕NS''
           #.Cache.LookUp←(⍳length)∘⍳
           #.Cache.LookUp 9
-          (,⊂'Cache')#.(8669⌶)1 file
+          (,⊂'Cache')#.(8669⌶)slot file
+        ∇
+                          
+        ∇ CreateLargeCache(file slot)
+          :Access Public
+          :Signature CreateLargeCache String file, Int32 slot
+          {
+              nm←'Cache',⍵
+              sink1←#.⍎nm,'Data←{500000(?⍴)100000}¨⍳10'
+              sink2←#.⍎nm,'LookUp←(90000?100000)∘⍳'
+              sink3←#.⍎nm,'LookUp 9'
+          }¨⎕A
+          ('Cache'∘,¨,⎕A∘.,'Data' 'LookUp')#.(8669⌶)slot file
         ∇
 
-        ∇ CreateSimpleCodeFile file
+        ∇ CreateLargeCacheNSS(file slot)
           :Access Public
-          :Signature CreateSimpleCodeFile String file
+          :Signature CreateLargeCacheNSS String file, Int32 slot
+          {
+              ns←⍎('Cache',⍵)#.⎕NS''
+              ns.Data←{500000(?⍴)100000}¨⍳10
+              ns.LookUp←(90000?100000)∘⍳
+              sink←ns.LookUp 9
+          }¨⎕A
+          ('Cache'∘,¨⎕A)#.(8669⌶)slot file
+        ∇
+
+        ∇ CreateSimpleCodeFile(file slot)
+          :Access Public
+          :Signature CreateSimpleCodeFile String file, Int32 slot
           #.fn1←{⍳⍵}
-          (,⊂'fn1')#.(8669⌶)1 file
+          (,⊂'fn1')#.(8669⌶)slot file
         ∇
 
-        ∇ CreateCodeFile file;names
+        ∇ CreateCodeFile(file slot);names
           :Access Public
-          :Signature CreateCodeFile String file
+          :Signature CreateCodeFile String file, Int32 slot
           names←#.⎕NL 3
-          names #.(8669⌶)1 file
+          names #.(8669⌶)slot file
         ∇
 
         ∇ LoadWS file
@@ -187,9 +211,9 @@
           #.⎕CY file
         ∇
 
-        ∇ CreateCodeFileFromFolder(slot file sourcefolder);files;names;sink
+        ∇ CreateCodeFileFromFolder(file sourcefolder slot);files;names;sink
           :Access Public
-          :Signature CreateCodeFileFromFolder Int32 slot, String file, String sourcefolder
+          :Signature CreateCodeFileFromFolder String file, String sourcefolder, Int32 slot
           files←⊃⎕NINFO⍠('Recurse' 1)('Wildcard' 1)⊢sourcefolder,'\*.aplf'
           names←⊃,/2 #.⎕FIX¨(⊂'file://'),¨files
          ⍝ sink←#.(5178⌶)¨names
@@ -201,12 +225,12 @@
           :Signature Execute String expr
           ⍎expr
         ∇
-                                       
+
         ∇ ReadVars starting;names;sink
           :Access Public
           :Signature ReadVars String starting
           names←'∆'#.⎕NL 2
-          names⌿⍨←⊣/starting⍷names 
+          names⌿⍨←⊣/starting⍷names
           sink←#.⍎⍤1⊢names
         ∇
 
@@ -218,7 +242,7 @@
 
         ∇ GenerateTfns fn;∆;sfns;⎕IO;subs;sub;l;r;s
           :Access Public
-          :Signature GenerateTfns String fn 
+          :Signature GenerateTfns String fn
           ⎕IO←0
           ∆←''
           ∆,←⊂'c←a ',fn,' b'

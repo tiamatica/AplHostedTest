@@ -42,7 +42,7 @@ namespace Test {
             return interpreter;
         }
 
-        private void TestLookUpLength(int length) {
+        private void TestLookUpLength(int length, int slot) {
             var interpreter1 = CreateInterpreter();
             var interpreter2 = CreateInterpreter();
 
@@ -51,7 +51,7 @@ namespace Test {
             var test1 = new CodeFile(interpreter1);
 
             try {
-                test1.CreateLookUp(file, length);
+                test1.CreateLookUp(file, length, slot);
             } finally { }
             Assert.IsTrue(interpreter1.Unload());
 
@@ -65,12 +65,12 @@ namespace Test {
 
         [TestMethod]
         public void TestLookUp15() {
-            TestLookUpLength(15);
+            TestLookUpLength(15, 1);
         }
 
         [TestMethod]
         public void TestLookUp16() {
-            TestLookUpLength(16);
+            TestLookUpLength(16, 2);
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace Test {
             if (File.Exists(codefile)) File.Delete(codefile);
             var interpreter1 = CreateInterpreter();
             var aplc = new CodeFile(interpreter1);
-            aplc.CreateSimpleCodeFile(codefile);
+            aplc.CreateSimpleCodeFile(codefile, 3);
             aplc.Dispose();
             interpreter1.Unload();
 
@@ -112,7 +112,7 @@ namespace Test {
             var codefile = Path.Combine(folderpath, "fn1.dwx");
 
             try {
-                test1.CreateCodeFileFromFolder(1, codefile, folderpath);
+                test1.CreateCodeFileFromFolder(codefile, folderpath, 4);
             } finally {
                 Directory.Delete(folderpath, true);
             }
@@ -126,7 +126,7 @@ namespace Test {
             if (File.Exists(codefile)) File.Delete(codefile);
             var interpreter = CreateInterpreter();
             var aplc = new CodeFile(interpreter);
-            aplc.CreateSimpleCodeFile(codefile);
+            aplc.CreateSimpleCodeFile(codefile, 5);
             aplc.Dispose();
             interpreter.Unload();
 
@@ -145,11 +145,27 @@ namespace Test {
         }
         [TestMethod]
         public void TestUseSharedCodeFileNamespaceMultiHost() {
-            var codefile = Path.Combine(Path.GetTempPath(), "LookUp.dwx");
+            var codefile = Path.Combine(Path.GetTempPath(), "LookUp100.dwx");
             if (File.Exists(codefile)) File.Delete(codefile);
             var interpreter = CreateInterpreter();
             var aplc = new CodeFile(interpreter);
-            aplc.CreateLookUp(codefile, 100);
+            aplc.CreateLookUp(codefile, 100, 6);
+            aplc.Dispose();
+            interpreter.Unload();
+
+            var interpreter1 = CreateInterpreter(new[] { codefile });
+            var interpreter2 = CreateInterpreter(new[] { codefile });
+            var interpreter3 = CreateInterpreter(new[] { codefile });
+
+        }
+
+        [TestMethod]
+        public void TestUseSharedCodeFileLargeNamespacesMultiHost() {
+            var codefile = Path.Combine(Path.GetTempPath(), "largecachefile.dwx");
+            if (File.Exists(codefile)) File.Delete(codefile);
+            var interpreter = CreateInterpreter();
+            var aplc = new CodeFile(interpreter);
+            aplc.CreateLargeCache(codefile, 7);
             aplc.Dispose();
             interpreter.Unload();
 
