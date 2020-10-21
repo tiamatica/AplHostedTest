@@ -1,4 +1,5 @@
 ﻿using System;
+using AplBaseClasses;
 using AplClasses;
 using AplDisposable;
 using Dyalog;
@@ -16,8 +17,17 @@ namespace Test {
         }
 
         [TestMethod]
-        [Description("Check dispose method triggered simple class.")]
-        public void DisposeSimpleClass() {
+        [Description("Check dispose method triggered on AplBaseDisposable.")]
+        public void TestAplBaseDisposable() {
+            var interpreter = GetInterpreter();
+            using (var test = new AplBaseDisposable(interpreter)) {
+            }
+            interpreter.Unload();
+        }
+
+        [TestMethod]
+        [Description("Check dispose method triggered on AplDisposableAplBaseNonDisposable.")]
+        public void TestAplDisposableAplBaseNonDisposable() {
             var interpreter = GetInterpreter();
             using (var test = new AplDisposableAplBaseNonDisposable(interpreter)) {
             }
