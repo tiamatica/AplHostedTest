@@ -25,5 +25,6 @@
           :Signature Int32←CallWithArgument Int32
           res←arg
         ∇
+
     :EndClass
 :EndNamespace

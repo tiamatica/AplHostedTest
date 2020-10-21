@@ -38,6 +38,7 @@ namespace Test {
             var cls = new AplGroup002.AClass(int1);
             cls.Stop("Hello");
             cls.Stop("World");
+            cls.Stop("Stop");
             cls.Stop("HelloWorld");
             cls.Hello();
             cls.Dispose();

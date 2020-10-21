@@ -125,7 +125,7 @@
         ∇ Make number
           :Implements Constructor
           :Access Public
-          :Signature TestClass Int32 number
+          :Signature NewClass Int32 number
           vNumber←number
         ∇
 

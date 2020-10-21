@@ -50,7 +50,7 @@ namespace CodeFilePerf {
                 aplc.GenerateTfns(letter);
             }
             Console.WriteLine($"Save to: {codefile}.");
-            aplc.CreateCodeFile(codefile);
+            aplc.CreateCodeFile(codefile, 1);
             Console.WriteLine($"Save to: {dwsfile}.");
             aplc.Dispose();
             Console.WriteLine($"Done creating codefiles.");
@@ -60,15 +60,21 @@ namespace CodeFilePerf {
         public static void RunAndTrace(bool usecodefile = false) {
             var process = Process.GetCurrentProcess();
             var stopwatch = new Stopwatch();
-            var fn = "largecodefile";
+            var fn = "externalcodefile";
             var ext = usecodefile ? ".dwx" : ".dws";
             Console.WriteLine($"Run and trace using {(usecodefile ? "codefile" : "standard dws")} {fn}{ext}.");
 
             var file = Path.Combine(Path.GetTempPath(), fn);
             var codefile = $"{file}{ext}";
-            
+
             CreateCodeFiles(file);
-        
+            //if (File.Exists(codefile)) File.Delete(codefile);
+            //var interpreterc = CreateInterpreter();
+            //var aplcc = new CodeFile(interpreterc);
+            //aplcc.CreateLargeCache(codefile);
+            //aplcc.Dispose();
+            //interpreterc.Unload();
+
             process.Refresh();
             var initialWS = process.WorkingSet64;
             var initialPB = process.PrivateMemorySize64;
@@ -77,9 +83,9 @@ namespace CodeFilePerf {
             DyalogInterpreter[] interpreterArray = new DyalogInterpreter[N];
             CodeFile[] aplcArray = new CodeFile[N];
             string[] codeFiles = usecodefile ? new[] { codefile } : null;
-            
+
             Console.WriteLine($"Interpreter, WS, PB, ElapsedMS");
-            Console.WriteLine($" -1,{initialWS, 15},{initialPB, 15},0");
+            Console.WriteLine($" -1,{initialWS,15},{initialPB,15},0");
             for (var i = 0; i < N; i++) {
                 stopwatch.Restart();
                 var interpreter = CreateInterpreter(codeFiles);
@@ -89,7 +95,7 @@ namespace CodeFilePerf {
                 if (!usecodefile) aplc.LoadWS(codefile);
                 stopwatch.Stop();
                 process.Refresh();
-                Console.WriteLine($"{i, 3},{process.WorkingSet64, 15},{process.PrivateMemorySize64, 15}, {stopwatch.ElapsedMilliseconds}");
+                Console.WriteLine($"{i,3},{process.WorkingSet64,15},{process.PrivateMemorySize64,15}, {stopwatch.ElapsedMilliseconds}");
             }
 
             // execute function in each interpreter sequentially
@@ -98,11 +104,14 @@ namespace CodeFilePerf {
             for (var i = 0; i < N; i++) {
                 var letter = alphabet.Substring(i, 1);
                 stopwatch.Restart();
-                aplcArray[i].Execute($"{i} #.A0 {i}");
-                //aplcArray[i].Execute($"{{}}#.{letter}.(⍎⍤1⊢⎕NL 2)");
+                aplcArray[i].Execute($"{i} #.A {i}");
+                //aplcArray[i].Execute($"+/+/¨#.Cache{letter}Data");
+                //aplcArray[i].Execute($"#.Cache{letter}LookUp 1");
+                //aplcArray[i].Execute($"#.Cache{letter}LookUp 1");
+                //aplcArray[i].Execute($"+/+/¨#.Cache{letter}Data");
                 stopwatch.Stop();
                 process.Refresh();
-                Console.WriteLine($"{i, 3},{process.WorkingSet64, 15},{process.PrivateMemorySize64, 15}, {stopwatch.ElapsedMilliseconds}");
+                Console.WriteLine($"{i,3},{process.WorkingSet64,15},{process.PrivateMemorySize64,15}, {stopwatch.ElapsedMilliseconds}");
             }
             // check time spent and memory
             process.Refresh();

@@ -141,7 +141,7 @@ namespace Test {
             aplc1.Execute("#.fn1 1");
             aplc2.Execute("#.fn1 2");
             aplc3.Execute("#.fn1 3");
-            
+
         }
         [TestMethod]
         public void TestUseSharedCodeFileNamespaceMultiHost() {
@@ -158,7 +158,17 @@ namespace Test {
             var interpreter3 = CreateInterpreter(new[] { codefile });
 
         }
+        [TestMethod]
+        public void TestUseSharedCodeFileNamespaceMultiHostSCD() {
 
+            var codefiles = new string[] {
+                Path.Combine(Path.GetTempPath(), "main_20201006_141088.dwx"),
+                Path.Combine(Path.GetTempPath(), "mainfns_20201006_141088.dwx")
+            };
+            var interpreter1 = CreateInterpreter(codefiles);
+            var interpreter2 = CreateInterpreter(codefiles);
+            var interpreter3 = CreateInterpreter(codefiles);
+        }
         [TestMethod]
         public void TestUseSharedCodeFileLargeNamespacesMultiHost() {
             var codefile = Path.Combine(Path.GetTempPath(), "largecachefile.dwx");

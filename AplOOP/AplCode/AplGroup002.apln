@@ -251,7 +251,30 @@
           :Signature ListFromCS System.Int32 no
           tsis←DotNetClasses.ReturnObjects.ListOfClasses no
         ∇
+       
+        ∇ res←CallInt arg
+          :Access Public
+          :Signature Int32←CallInt Int32
+          res←arg
+        ∇
 
+        ∇ res←CallNetObject arg
+          :Access Public
+          :Signature DotNetClasses.DataItemClass←CallNetObject DotNetClasses.DataItemClass
+          res←arg
+        ∇
+
+        :Property Simple Name
+        :Access Public
+            ∇ r←get               
+            :Signature String←Name
+              r←_Name
+            ∇
+            ∇ set r
+            :Signature Name String
+              _Name←r.NewValue
+            ∇
+        :EndProperty
     :EndClass
 
 :EndNamespace ⍝ AplGroup002

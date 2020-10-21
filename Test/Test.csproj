@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="CodeFileTests.cs" />
     <Compile Include="DebugTests.cs" />
+    <Compile Include="DisposeTests.cs" />
     <Compile Include="DWA.cs" />
     <Compile Include="GuiTests.cs" />
     <Compile Include="SimpleAplClassTests.cs" />
