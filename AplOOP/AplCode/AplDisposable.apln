@@ -1,0 +1,65 @@
+﻿:Namespace AplDisposable
+:Using System
+:Using AplBaseClasses,.\AplBase.dll
+
+    :Class AplDisposableAplBaseNonDisposable : AplBase, IDisposable
+
+        ∇ Make
+          :Implements Constructor
+          :Access Public
+          :Signature AplDisposableAplBaseNonDisposable
+        ∇
+
+        ∇ DisposeImpl
+          :Implements Method IDisposable.Dispose
+          ∘∘∘
+          destruct
+        ∇
+
+        ∇ destruct;sink
+          :Implements Destructor
+          ∘∘∘
+          ⍝ Cleanup!
+        ∇
+
+    :EndClass
+
+⍝    :Class AplDisposableAplBaseDisposable : AplBaseDisposable, IDisposable
+⍝
+⍝        ∇ Make
+⍝          :Implements Constructor
+⍝          :Access Public
+⍝          :Signature AplDisposableAplBaseDisposable
+⍝        ∇
+⍝
+⍝        ∇ DisposeImpl
+⍝          :Implements Method IDisposable.Dispose
+⍝          ∘∘∘
+⍝          destruct
+⍝        ∇
+⍝
+⍝        ∇ destruct;sink
+⍝          :Implements Destructor
+⍝          ∘∘∘
+⍝          ⍝ Cleanup!
+⍝        ∇
+⍝
+⍝    :EndClass
+⍝
+⍝    :Class AplNonDisposableAplBaseDisposable : AplBaseDisposable
+⍝
+⍝        ∇ Make
+⍝          :Implements Constructor
+⍝          :Access Public
+⍝          :Signature AplNonDisposableAplBaseDisposable
+⍝        ∇
+⍝
+⍝        ∇ destruct;sink
+⍝          :Implements Destructor
+⍝          ∘∘∘
+⍝          ⍝ Cleanup!
+⍝        ∇
+⍝
+⍝    :EndClass
+⍝
+:EndNamespace

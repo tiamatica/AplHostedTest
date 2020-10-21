@@ -60,4 +60,28 @@
         ∇
 
     :EndClass
+
+    :Class AplBaseDisposable : IDisposable
+        :Field Private Instance vNumber
+
+        ∇ Make
+          :Implements Constructor
+          :Access Public
+          :Signature AplBaseDisposable
+        ∇
+
+        ∇ DisposeImpl
+          :Implements Method IDisposable.Dispose
+          ∘∘∘
+          destruct
+        ∇
+
+        ∇ destruct;sink
+          :Implements Destructor
+          ∘∘∘
+          ⍝ Cleanup!
+        ∇
+
+    :EndClass
+
 :EndNamespace

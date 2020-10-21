@@ -166,7 +166,7 @@
           #.Cache.LookUp 9
           (,⊂'Cache')#.(8669⌶)slot file
         ∇
-                          
+
         ∇ CreateLargeCache(file slot)
           :Access Public
           :Signature CreateLargeCache String file, Int32 slot
@@ -270,4 +270,5 @@
         ∇
 
     :EndClass
+
 :EndNamespace
